@@ -264,3 +264,114 @@ For a full reference on `icacls` syntax, options, and examples:
 
 💡 Someone accessing locally (e.g. console, RDP) only deals with **NTFS perms**.  
 Someone accessing over network (SMB) → both **share + NTFS perms** apply.
+
+## Network Shares and Permissions
+
+### Malware & Windows
+- Windows = high-value target (70%+ market share)
+- Malware authors focus on Windows → wider reach
+- No OS is immune; any OS can have malware
+- **EternalBlue (SMBv1)** still a major threat on unpatched systems → common path for ransomware
+
+---
+
+### SMB (Server Message Block)
+- Protocol for sharing resources (files, printers) over network
+- Used across org sizes (SMB = Small/Medium/Large business)
+
+---
+
+### Share vs NTFS Permissions
+They apply together on shared resources but are not the same:
+- **NTFS permissions** → apply locally (on file system)
+- **Share permissions** → apply when accessing over SMB (network)
+
+---
+
+### Share Permissions
+
+| Permission | Description |
+|------------|-------------|
+| Full Control | All Change + Read actions + change NTFS perms |
+| Change | Read, edit, delete, add files/folders |
+| Read | View file and subfolder contents |
+
+---
+
+### NTFS Basic Permissions
+
+| Permission | Description |
+|------------|-------------|
+| Full Control | Add/edit/move/delete + change perms |
+| Modify | View/modify/add/delete |
+| Read & Execute | View + run programs |
+| List folder contents | View files/subfolders |
+| Read | View contents |
+| Write | Write changes + add files |
+| Special Permissions | Advanced options |
+
+---
+
+### NTFS Special Permissions
+
+| Permission | Description |
+|------------|-------------|
+| Full Control | Same as basic full control |
+| Traverse folder / execute file | Access subfolders/run programs without parent folder access |
+| List folder/read data | View folder content + open files |
+| Read attributes | View basic file/folder attributes |
+| Read extended attributes | View app-specific attributes |
+| Create files/write data | Create files + edit content |
+| Create folders/append data | Create subfolders + add data (no overwrite) |
+| Write attributes | Change basic attributes |
+| Write extended attributes | Change extended attributes |
+| Delete subfolders and files | Delete content but not parent |
+| Delete | Delete parent + content |
+| Read permissions | View permission settings |
+| Change permissions | Modify permission settings |
+| Take ownership | Become owner of file/folder |
+
+---
+
+### Key points
+- NTFS perms apply on local system (incl. RDP access)
+- Share perms apply over SMB (remote access)
+- NTFS gives more granular control
+- NTFS folders inherit parent perms by default (can disable inheritance)
+
+---
+
+## Creating and Managing a Network Share
+
+### Context
+- Created shared folder (e.g. `Company Data`) on Windows 10 Desktop using GUI → **Advanced Sharing**
+- Shares on desktop OS = small biz / beachhead / attacker exfil
+- Enterprise shares = SAN / NAS / Windows Server
+
+---
+
+### Share setup summary
+- **Share name** defaults to folder name
+- Possible to set max concurrent users
+- Permissions: both **SMB (share)** + **NTFS** apply
+- Share ACL → list of **ACEs** (Access Control Entries) → users/groups (security principals)
+
+---
+
+### Share types seen
+| Sharename | Type | Comment |
+|-----------|------|---------|
+| ADMIN$ | Disk | Remote Admin |
+| C$ | Disk | Default share |
+| Company Data | Disk | (our custom share) |
+| IPC$ | IPC | Remote IPC (inter-process comms pipe) |
+
+---
+
+### Commands used
+✅ List shares:
+-> bash
+smbclient -L <target_IP> -U htb-student
+
+smbclient '\\<target_IP>\Company Data' -U htb-student
+
