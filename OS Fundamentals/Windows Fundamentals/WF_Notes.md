@@ -53,7 +53,7 @@ Industries like **MSPs** (Managed Service Providers) and **MSSPs** (Managed Secu
 - Server = target machine  
 - Default port: **3389**  
 
-👉 Think of it as:
+Think of it as:
 - **Subnet = street**
 - **IP = house**
 - **Port = window/door**
@@ -137,11 +137,11 @@ There are 5 types:
 ---
 
 ### FAT32
-✅ Pros:
+Pros:
 - Great device compatibility (computers, cameras, consoles, smartphones, tablets)  
 - OS cross-compatibility (Windows 95+, macOS, Linux)
 
-❌ Cons:
+Cons:
 - Max file size: **<4GB**
 - No built-in data protection / compression
 - No native encryption (needs 3rd-party tools)
@@ -150,13 +150,13 @@ There are 5 types:
 
 ### NTFS
 Default since **Windows NT 3.1**  
-✅ Pros:
+Pros:
 - Reliable (can restore FS consistency after failure)
 - Supports granular permissions
 - Very large partition support
 - Journaling (logs file changes)
 
-❌ Cons:
+Cons:
 - Not natively supported by most mobile devices
 - Limited support by older media devices (e.g. TVs, cameras)
 
@@ -174,7 +174,7 @@ Default since **Windows NT 3.1**
 | Read | View/list folders and file contents |
 | Traverse Folder | Move through folders to reach a file (even without listing/view perms on intermediate folders) |
 
-ℹ️ By default:
+By default:
 - Files/folders inherit perms from parent  
 - Admins can disable inheritance + set custom perms  
 
@@ -262,7 +262,7 @@ For a full reference on `icacls` syntax, options, and examples:
 - NTFS perms = more granular, detailed control  
 - NTFS folders inherit parent perms by default → can disable inheritance for custom perms  
 
-💡 Someone accessing locally (e.g. console, RDP) only deals with **NTFS perms**.  
+Someone accessing locally (e.g. console, RDP) only deals with **NTFS perms**.  
 Someone accessing over network (SMB) → both **share + NTFS perms** apply.
 
 ## Network Shares and Permissions
@@ -369,9 +369,147 @@ They apply together on shared resources but are not the same:
 ---
 
 ### Commands used
-✅ List shares:
+List shares:
 -> bash
 smbclient -L <target_IP> -U htb-student
 
 smbclient '\\<target_IP>\Company Data' -U htb-student
+
+---
+
+## Service Permissions
+
+### Key points
+- Services = long-running processes, critical to Windows  
+- Often overlooked → potential for:
+  - Loading malicious DLLs
+  - App execution w/o admin rights
+  - Privilege escalation
+  - Persistence  
+
+- Misconfigs happen due to:
+  - 3rd party software installers
+  - Admin mistakes  
+
+- Critical services should run under dedicated **service accounts** (not regular user accounts)
+
+---
+
+### Built-in service accounts
+- **LocalSystem** → highest local privilege
+- **LocalService** → minimal local privilege
+- **NetworkService** → minimal local + network identity  
+
+*Principle of Least Privilege* → services should not run with more rights than needed.
+
+---
+
+### Managing/viewing services
+
+**GUI**
+- `services.msc`
+  - View name, path, logon account, recovery actions
+  - Example: `Windows Update (wuauserv)`
+
+**CLI: `sc.exe`**
+- Query config:
+```powershell
+sc qc wuauserv
+
+---
+
+## Understanding SDDL in Service Permissions
+
+### What is SDDL?
+- **SDDL (Security Descriptor Definition Language)** → format used to represent security descriptors in Windows
+- Every securable object (even unnamed ones) has a **security descriptor**
+- A security descriptor contains:
+  - **Owner**
+  - **Primary group**
+  - **DACL (Discretionary Access Control List)** → controls access
+  - **SACL (System Access Control List)** → logs access attempts
+
+---
+
+### Example SDDL (from wuauserv service)
+
+Breakdown:
+- `D:` → indicates this string defines a DACL  
+- Each `( ... )` → Access Control Entry (ACE) for a user/group  
+
+---
+
+#### First ACE: `(A;;CCLCSWRPLORC;;;AU)`
+- `A;;` → Access is **Allowed**
+- `;;;AU` → Applies to **Authenticated Users**
+- Permissions:
+  - `CC` → SERVICE_QUERY_CONFIG (query service config)
+  - `LC` → SERVICE_QUERY_STATUS (query service status)
+  - `SW` → SERVICE_ENUMERATE_DEPENDENTS (list dependent services)
+  - `RP` → SERVICE_START (start service)
+  - `LO` → SERVICE_INTERROGATE (query current status)
+  - `RC` → READ_CONTROL (read security descriptor)
+
+---
+
+#### Second ACE: `(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)`
+- Applies to **Builtin Administrators (BA)**
+- Broader permissions including:
+  - `WP` → SERVICE_STOP
+  - `DT` → SERVICE_PAUSE_CONTINUE
+  - `SD` → DELETE
+  - `WD` → WRITE_DAC
+  - `WO` → WRITE_OWNER  
+  *(plus those from first ACE)*  
+
+---
+
+#### Third ACE: `(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;SY)`
+- Applies to **SYSTEM**
+- Same extensive permissions as BA  
+
+---
+
+### Notes
+- The structure:  
+
+(A;; <permissions> ;;; <security principal>)
+
+- Each 2-char code → specific right  
+- DACL controls what users/groups can do  
+- SACL (not shown here) would log attempts  
+
+---
+
+## Windows Sessions
+
+### Interactive Sessions
+- Initiated by a user entering credentials (local or domain)
+- Methods:
+  - Direct login at machine
+  - `runas` command (secondary logon session)
+  - Remote Desktop (RDP)
+
+---
+
+### Non-Interactive Sessions
+- No login credentials required  
+- Used by Windows to start services, apps, scheduled tasks at boot  
+- Accounts:  
+  - **Local System (NT AUTHORITY\SYSTEM)**  
+    - Most powerful account  
+    - More powerful than local admins  
+    - Starts Windows services  
+  - **Local Service (NT AUTHORITY\LocalService)**  
+    - Limited privileges (like local user)  
+    - Starts select services  
+  - **Network Service (NT AUTHORITY\NetworkService)**  
+    - Similar to domain user account  
+    - Limited local rights + can auth on network  
+
+---
+
+### Key notes
+- Non-interactive accounts: no password  
+- Common for service execution + system processes  
 
