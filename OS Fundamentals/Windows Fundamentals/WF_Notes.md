@@ -513,3 +513,126 @@ Breakdown:
 - Non-interactive accounts: no password  
 - Common for service execution + system processes  
 
+---
+
+## Interacting with the Windows Operating System
+
+### Graphical User Interface (GUI)
+- Introduced late 1970s (Xerox PARC) → adopted by Apple + Microsoft
+- Solves usability issues for non-technical users (no need to memorize commands)
+- Allows point-and-click interaction with OS/apps
+- Common use cases for sysadmins:
+  - Active Directory management
+  - IIS configuration
+  - Database interaction  
+
+---
+
+### Remote Desktop Protocol (RDP)
+- Microsoft proprietary protocol for remote GUI access
+- Client ↔ server architecture
+- Uses **TCP port 3389**
+- Behaves as if user is logged in locally
+- Commonly used for:
+  - Administering remote systems
+  - Remote work after VPN connection  
+
+---
+
+### Windows Command Line
+
+#### Benefits
+- Greater control over system
+- Supports automation (e.g. bulk user creation)
+- Useful for admin + troubleshooting tasks  
+
+#### Interfaces
+- **Command Prompt (CMD / cmd.exe)**  
+  - Execute commands + scripts
+  - Examples:
+    - `ipconfig` → view IP info
+    - setup scheduled tasks
+    - create scripts / batch files  
+  - Can open:
+    - Start Menu → `cmd`
+    - Run dialog → `cmd`
+    - `C:\Windows\System32\cmd.exe`
+
+- **PowerShell**
+  - (Not covered in this batch but key alternative to CMD)
+
+*Recommended:* Check out the [Windows Command Reference](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands) for full syntax + examples.
+
+## PowerShell
+
+### Overview
+- Command shell + scripting environment designed for system admins  
+- Built on **.NET Framework**
+- Powerful interface to OS  
+- Provides direct access to file system (similar to CMD)
+
+---
+
+### Cmdlets
+- Small, single-function tools built-in to PowerShell  
+- Form: **Verb-Noun**
+- 100+ core cmdlets; can write custom ones  
+- Used for:
+  - System admin tasks
+  - Automation
+  - Complex scripting  
+
+Examples:
+-> powershell
+Get-ChildItem           // List current directory
+Get-ChildItem -Recurse  // List current dir + all subdirs
+Get-ChildItem -Path C:\Users\Administrator\Documents
+Get-ChildItem -Path C:\Users\Administrator\Downloads -Recurse
+
+## PowerShell Execution Policy
+
+- **Execution policy** = security feature to control script execution
+- Prevents accidental or malicious script runs  
+
+---
+
+### Execution policy types
+
+| Policy | Description |
+|---------|-------------|
+| **AllSigned** | All scripts (local + remote) must be signed by trusted publisher; prompt for unlisted publishers |
+| **Bypass** | No scripts blocked, no warnings/prompts |
+| **Default** | Restricted (desktop) / RemoteSigned (server) |
+| **RemoteSigned** | Local scripts: no signature needed; downloaded scripts: require digital signature |
+| **Restricted** | No script files run; individual commands allowed |
+| **Undefined** | No policy set → defaults apply (Restricted if all scopes = undefined) |
+| **Unrestricted** | Unsigned scripts can run; warn on scripts not from local intranet zone |
+
+---
+
+### Notes
+- Default:
+  - **Windows desktop** → Restricted  
+  - **Windows server** → RemoteSigned  
+  - **Non-Windows systems** → Unrestricted  
+
+Example check: powershell
+
+Get-ExecutionPolicy -List
+
+### Execution Policy Bypass
+
+- Execution policy is **not a true security control**
+- Can be bypassed by:
+  - Typing script contents directly in PowerShell
+  - Downloading + invoking script manually
+  - Using encoded command
+  - Adjusting execution policy (if rights permit)
+  - Setting policy for current process (no config change; applies for session duration)
+
+Example: set execution policy for current session
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass
+
+
+
