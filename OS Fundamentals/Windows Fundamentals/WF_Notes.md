@@ -636,3 +636,223 @@ Set-ExecutionPolicy -Scope Process Bypass
 
 ---
 
+## Windows Management Instrumentation (WMI)
+
+WMI = Subsystem in PowerShell for **system monitoring & management**  
+Pre-installed since Windows 2000  
+
+---
+
+### Key Components
+
+| Component | Description |
+|----------|-------------|
+| **WMI service** | Runs at boot; acts as intermediary between providers, repository, and apps |
+| **Managed objects** | Logical/physical components WMI can manage |
+| **WMI providers** | Monitor events/data of specific objects |
+| **Classes** | Pass data to WMI service; used by providers |
+| **Methods** | Actions attached to classes (e.g., start/stop remote processes) |
+| **WMI repository** | DB storing static WMI-related data |
+| **CIM Object Manager** | Requests data from providers and returns to the app |
+| **WMI API** | Allows apps to access WMI |
+| **WMI Consumer** | Sends queries to objects via CIM Manager |
+
+---
+
+### Common WMI Uses
+
+- Monitor system status (local/remote)
+- Configure security settings
+- Set/change user & group permissions
+- Modify system properties
+- Code execution
+- Schedule processes
+- Setup logging
+
+---
+
+### Using WMI
+
+- WMI via **PowerShell**
+- WMI via **WMIC CLI (deprecated but still useful)**
+
+```cmd
+# Start WMI interactive shell
+wmic
+
+# Run WMI command directly
+wmic computersystem get name
+
+In a way, its like linux's SUDO, from what I can tell
+
+---
+
+### Microsoft Management Console (MMC)
+
+The **MMC** is a framework for grouping **snap-ins** (admin tools) used to manage:
+
+- Hardware  
+- Software  
+- Network components  
+
+**Available on**: All Windows versions since **Windows Server 2000**
+
+---
+
+### Key Features
+
+- Allows the creation of **custom admin consoles**
+- Can manage **local and remote** systems
+- Snap-ins are modular and can be added based on the admin's needs
+- Custom consoles can be **saved & distributed** to other users
+
+---
+
+### What Are Snap-ins?
+
+Snap-ins are the actual admin tools (e.g., Device Manager, Services, Event Viewer).  
+You use MMC to **group only what you need** into a single custom UI.
+
+---
+
+### How to Open
+
+```cmd
+# Run from Start or Run dialog
+mmc
+
+---
+
+## Windows Subsystem for Linux (WSL)
+
+Το **WSL** είναι feature των Windows 10 και Windows Server 2019 που επιτρέπει την εκτέλεση **Linux binaries** natively μέσα από το Windows OS.
+
+Αρχικά φτιάχτηκε για devs που ήθελαν να τρέχουν **Bash, Ruby** και άλλα native Linux CLI tools (`sed`, `awk`, `grep`, κ.λπ.) κατευθείαν μέσα από το Windows workstation.
+
+---
+
+### WSL 2
+
+Η δεύτερη έκδοση (κυκλοφόρησε Μάιο 2019) εισήγαγε **πραγματικό Linux kernel** μέσω Hyper-V components.
+
+---
+
+### Instalation
+
+```powershell
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+
+---
+
+## What is Hyper-V
+
+**Hyper-V** is Microsoft’s virtualization platform (hypervisor) that allows users to create and manage virtual machines (VMs) on Windows systems.
+
+### Definition
+
+Hyper-V is a **Type 1 hypervisor**, meaning it runs directly on the hardware. However, on Windows 10/11, it's implemented within the OS but still behaves like a bare-metal hypervisor. It's built into:
+
+- Windows 10 Pro, Enterprise, and Education
+- Windows 11 Pro+
+- Windows Server editions
+
+---
+
+### What Can Hyper-V Do?
+
+- Create and manage **Virtual Machines (VMs)**
+- Run multiple operating systems (Windows, Linux, etc.) on the same physical host
+- Take **snapshots** and restore previous VM states
+- Isolated networking and sandboxed environments for testing or malware analysis
+
+---
+
+### Use in WSL 2
+
+**WSL 2** (Windows Subsystem for Linux v2) uses **Hyper-V technology** to run a **real Linux kernel** inside a lightweight VM — though it feels fully integrated with the host Windows OS.
+
+---
+
+### Enabling Hyper-V
+
+To enable Hyper-V, open a PowerShell terminal as Administrator and run:
+
+```powershell
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
+
+
+## Desktop Experience vs. Server Core
+
+**Windows Server Core** was first introduced in **Windows Server 2008** as a minimalistic environment that includes only the essential server components.
+
+### Key Differences
+
+| Feature                         | Server Core                                 | Desktop Experience (GUI) |
+|---------------------------------|---------------------------------------------|--------------------------|
+| **GUI**                         | Not available                               | Full graphical interface |
+| **Management Method**           | Command-Line, PowerShell, Remote (MMC/RSAT) | GUI & CLI                | 
+| **Resource Usage**              | Lower (disk, memory, CPU)                   | Higher                   |
+| **Attack Surface**              | Smaller                                     | Larger                   |
+| **Learning Curve**              | Steep                                       | Easier                   |
+| **Use Cases**                   | Headless servers, secure setups             | General-purpose servers  |
+
+### GUI Tools Still Available in Server Core
+
+Even though Server Core has no GUI, some graphical programs are still supported:
+
+- **Registry Editor**
+- **Notepad**
+- **System Information**
+- **Windows Installer**
+- **Task Manager**
+- **PowerShell**
+- **Sysinternals tools** (e.g., `ProcMon`, `ProcExp`, `AD Explorer`, `TCPView`)
+
+### ⚙️ Setup with `Sconfig`
+
+- Server Core setup is done via `Sconfig`, a **text-based VBScript interface**
+- Common tasks supported:
+  - Network configuration
+  - Windows Updates
+  - User management
+  - Remote management
+  - Windows activation
+
+### Applications Not Supported on Server Core
+
+Some apps **cannot run** on Server Core, such as:
+
+- Microsoft SCVMM 2019
+- System Center DPM 2019
+- SharePoint Server 2019
+- Project Server 2019
+
+### Summary
+
+- **Server Core** is a **lightweight, secure** alternative ideal for headless or production environments
+- **Desktop Experience** is more flexible and user-friendly, but heavier
+- Choose based on:
+  - Business needs
+  - Application compatibility
+  - Admin skill level
+
+---
+
+### Feature Comparison Table
+
+| Application                    | Server Core | Desktop Experience |
+|-------------------------------|-------------|--------------------|
+| `cmd.exe` (Command Prompt)    | ✅          | ✅                 |
+| PowerShell / .NET             | ✅          | ✅                 |
+| `regedit`                     | ✅          | ✅                 |
+| `diskmgmt.msc`                | ❌          | ✅                 |
+| Server Manager                | ❌          | ✅                 |
+| `mmc.exe`                     | ❌          | ✅                 |
+| `eventvwr`                    | ❌          | ✅                 |
+| `services.msc`                | ❌          | ✅                 |
+| Control Panel                 | ❌          | ✅                 |
+| Windows Explorer              | ❌          | ✅                 |
+| Task Manager (`taskmgr`)      | ✅          | ✅                 |
+| Internet Explorer / Edge      | ❌          | ✅                 |
+| Remote Desktop Services       | ✅          | ✅                 |
+
