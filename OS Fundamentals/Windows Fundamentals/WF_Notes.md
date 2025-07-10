@@ -1,16 +1,58 @@
 ## Accessing Windows
 
 ## Table of Contents
-- [Introduction to Windows](#introduction-to-windows)
-- [The Windows Operating System](#the-windows-operating-system)
-- [Windows Versions](#windows-versions)
-- [Accessing Windows](#accessing-windows)
-  - [Local Access](#local-access)
-  - [Remote Access](#remote-access)
-    - [Remote Desktop Protocol (RDP)](#remote-desktop-protocol-rdp)
-    - [Remote Desktop Connection (RDC)](#remote-desktop-connection-rdc)
-    - [Using xfreerdp](#using-xfreerdp)
-- [Operating System Structure](#operating-system-structure)
+- [Start WMI interactive shell](#start-wmi-interactive-shell)
+- [Run WMI command directly](#run-wmi-command-directly)
+    - [Microsoft Management Console (MMC)](#microsoft-management-console-mmc)
+    - [Key Features](#key-features)
+    - [What Are Snap-ins?](#what-are-snap-ins)
+    - [How to Open](#how-to-open)
+- [Run from Start or Run dialog](#run-from-start-or-run-dialog)
+  - [Windows Subsystem for Linux (WSL)](#windows-subsystem-for-linux-wsl)
+    - [WSL 2](#wsl-2)
+    - [Instalation](#instalation)
+  - [What is Hyper-V](#what-is-hyper-v)
+    - [Definition](#definition)
+    - [What Can Hyper-V Do?](#what-can-hyper-v-do)
+    - [Use in WSL 2](#use-in-wsl-2)
+    - [Enabling Hyper-V](#enabling-hyper-v)
+  - [Desktop Experience vs. Server Core](#desktop-experience-vs-server-core)
+    - [Key Differences](#key-differences)
+    - [GUI Tools Still Available in Server Core](#gui-tools-still-available-in-server-core)
+    - [⚙️ Setup with `Sconfig`](#️-setup-with-sconfig)
+    - [Applications Not Supported on Server Core](#applications-not-supported-on-server-core)
+    - [Summary](#summary)
+    - [Feature Comparison Table](#feature-comparison-table)
+- [Windows Security](#windows-security)
+  - [Security Principles](#security-principles)
+  - [Security Identifier (SID)](#security-identifier-sid)
+    - [Example](#example)
+  - [USER INFORMATION](#user-information)
+    - [SID Structure](#sid-structure)
+    - [Security Accounts Manager (SAM) and Access Control Entries (ACE)](#security-accounts-manager-sam-and-access-control-entries-ace)
+    - [User Account Control (UAC)](#user-account-control-uac)
+      - [Admin Approval Mode](#admin-approval-mode)
+      - [Why It Matters](#why-it-matters)
+  - [Registry](#registry)
+    - [Structure](#structure)
+    - [Root Keys](#root-keys)
+    - [Registry Value Types](#registry-value-types)
+    - [Example: Registry Editor UI](#example-registry-editor-ui)
+  - [Application Whitelisting](#application-whitelisting)
+    - [Key Concepts](#key-concepts-1)
+    - [Benefits of Whitelisting](#benefits-of-whitelisting)
+  - [AppLocker](#applocker)
+    - [Features](#features)
+    - [Rule Types](#rule-types)
+  - [Local Group Policy](#local-group-policy)
+    - [Domain vs Local Group Policy](#domain-vs-local-group-policy)
+    - [What Can Be Configured?](#what-can-be-configured)
+- [Windows Defender Antivirus](#windows-defender-antivirus)
+  - [History](#history)
+  - [Key Features](#key-features-1)
+  - [Configuration \& Management](#configuration--management)
+  - [UI Example](#ui-example)
+
 
 ### Local Access
 If you are reading these words, you have local access to a computer of some kind — smartphone, tablet, laptop, Raspberry Pi, or desktop.  
@@ -87,6 +129,7 @@ Example:
 ```bash
 xfreerdp /u:<username> /p:<password> /v:<target_ip>
 
+---
 
 ## Operating System Structure
 
