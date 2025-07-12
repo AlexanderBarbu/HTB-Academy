@@ -270,10 +270,11 @@ The **most common shell** in Linux is:
 
 ## 📍 Prompt Format Examples
 
-user@hostname:~$        'regular user in home directory'
-root@htb:/htb#          ' root user in /htb directory '
-$                       ' prompt with missing info (PS1 not set)'
-'#'                       ' same, but with root privileges '
+```bash
+user@hostname:~$        # regular user in home directory
+root@htb:/htb#          # root user in /htb directory
+$                       # prompt with missing info (PS1 not set)
+#                       # same, but with root privileges
 
 | Code           | Description                            |
 | -------------- | -------------------------------------- |
@@ -290,9 +291,10 @@ $                       ' prompt with missing info (PS1 not set)'
 | `\n`           | Newline                                |
 | `\s`           | Name of the shell                      |
 
+```
 ---
 
-# 🆘 Getting Help in the Linux Shell
+#  🆘  Getting Help in the Linux Shell
 
 ## 🧠 Why It's Important
 
@@ -319,5 +321,133 @@ $                       ' prompt with missing info (PS1 not set)'
 
 ---
 
+# 🧠 System Information (Linux Basics)
 
+Understanding your system is **essential** — both for basic Linux usage and for security assessments.  
+These commands help you **enumerate system info**, which is especially useful in:
 
+- 🧪 Privilege escalation
+- 🔍 Vulnerability assessments
+- 🔧 Debugging / troubleshooting
+
+---
+
+## 🖥️ Basic System & User Info
+
+| Command     | Description                                       |
+|-------------|---------------------------------------------------|
+| `whoami`    | Displays current **username**                    |
+| `id`        | Shows **user ID (UID), group ID (GID)** and group memberships |
+| `hostname`  | Shows or sets the **systems hostname**          |
+| `uname`     | Prints **kernel & system info** (add `-a` for all info) |
+| `pwd`       | Prints the **current working directory**         |
+
+---
+
+## 🌐 Network & Interface Info
+
+| Command     | Description                                       |
+|-------------|---------------------------------------------------|
+| `ifconfig`  | Displays or configures **network interfaces** (older) |
+| `ip a`      | Modern replacement for `ifconfig` – shows IP, interface info |
+| `netstat`   | Displays **network connections**, routing tables, etc. |
+| `ss`        | Modern alternative to `netstat`, focused on **sockets**
+
+---
+
+## 👥 Users & Sessions
+
+| Command     | Description                                       |
+|-------------|---------------------------------------------------|
+| `who`       | Shows **currently logged-in users**              |
+| `env`       | Displays current **environment variables**       |
+
+---
+
+## 💽 Devices & Storage
+
+| Command     | Description                                       |
+|-------------|---------------------------------------------------|
+| `lsblk`     | Lists all **block storage devices**              |
+| `lsusb`     | Lists **USB devices** connected to the system    |
+| `lspci`     | Lists **PCI devices** (e.g. network cards, GPUs) |
+| `lsof`      | Lists all **open files** (useful for debugging, forensics) |
+
+---
+
+## ⚙️ Processes
+
+| Command     | Description                                       |
+|-------------|---------------------------------------------------|
+| `ps`        | Displays **running processes** (`ps aux` for full list) |
+
+---
+
+## 🛠️ Pro Tips
+
+- Always run:
+  ```bash
+  <command> -h
+  <command> --help
+  man <command>
+
+---
+
+# 🔐 Logging In via SSH
+
+## 📌 What is SSH?
+
+**SSH (Secure Shell)** is a protocol used to securely access and manage remote systems via a command-line interface. It's:
+
+- Installed by default on most Linux and Unix systems  
+- Used by sysadmins for remote configuration  
+- Lightweight, reliable, and doesn't require a GUI
+
+---
+
+## 🚀 Connecting via SSH
+
+Basic syntax:
+```bash
+ssh htb-student@[IP_ADDRESS]
+```
+
+You’ll use this often throughout HTB modules and labs to connect to target systems.
+
+### 📟 Essential Commands After Login
+
+- hostname
+Prints the name of the machine you're logged into:
+✅ Useful for identifying the remote host during a session.
+
+- whoami
+Returns the current user:
+✅ Helps verify access level (e.g., regular user or root)
+✅ First step after gaining a reverse shell in an engagement
+
+- id
+Prints user ID, group ID, and group memberships:
+
+Example output:
+uid=1000(cry0l1t3) gid=1000(cry0l1t3) groups=1000(cry0l1t3),1337(hackthebox),4(adm),27(sudo)
+✅ Useful to identify special privileges (e.g., sudo, adm, hackthebox)
+
+- uname
+Prints system info. Basic usage: uname -a
+
+Example output:
+
+Linux box 4.15.0-99-generic #100-Ubuntu SMP Wed Apr 22 20:32:56 UTC 2020 x86_64 GNU/Linux
+To isolate the kernel release (useful for exploit lookups):
+
+uname -r
+✅ Can be used to google for kernel-specific exploits
+✅ E.g., search "4.15.0-99-generic exploit"
+
+### 🧠 Why It Matters
+
+These commands help verify your current access level
+Critical in privilege escalation and situational awareness
+Study their man pages (man id, man uname, etc.) to learn hidden flags and use cases
+
+---
