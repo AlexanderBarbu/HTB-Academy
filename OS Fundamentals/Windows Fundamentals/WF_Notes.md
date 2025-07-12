@@ -110,7 +110,7 @@ xfreerdp /u:<username> /p:<password> /v:<target_ip>
 
 #### Using `dir`
 Example:
-```powershell
+powershell
 dir c:\ /a
 
 ## File System
@@ -179,7 +179,7 @@ We can view/manage NTFS perms via:
 - **CLI:** `icacls`
 
 #### Example: list permissions
-```powershell
+powershell
 icacls c:\windows
 
 ### Further Reading: icacls
@@ -405,7 +405,7 @@ smbclient '\\<target_IP>\Company Data' -U htb-student
 
 **CLI: `sc.exe`**
 - Query config:
-```powershell
+powershell
 sc qc wuauserv
 
 ---
@@ -623,7 +623,7 @@ Get-ExecutionPolicy -List
   - Setting policy for current process (no config change; applies for session duration)
 
 Example: set execution policy for current session
-```powershell
+powershell:
 Set-ExecutionPolicy -Scope Process Bypass
 
 ---
@@ -668,7 +668,7 @@ Pre-installed since Windows 2000
 - WMI via **PowerShell**
 - WMI via **WMIC CLI (deprecated but still useful)**
 
-```cmd
+cmd:
 # Start WMI interactive shell
 wmic
 
@@ -769,7 +769,7 @@ Hyper-V is a **Type 1 hypervisor**, meaning it runs directly on the hardware. Ho
 
 To enable Hyper-V, open a PowerShell terminal as Administrator and run:
 
-```powershell
+powershell
 Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
 
 
@@ -893,7 +893,7 @@ In **Active Directory (AD)** environments, the SID also includes the **domain SI
 
 ### Example
 
-```powershell
+powershell
 PS C:\htb> whoami /user
 
 USER INFORMATION

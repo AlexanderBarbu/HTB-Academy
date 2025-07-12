@@ -19,7 +19,7 @@ Linux follows a minimalist, modular approach with 5 core principles:
 | **Small, single-purpose programs**       | Each tool does one thing well and can be reused.                           |
 | **Chainability of programs**             | Tools can be combined to handle complex tasks.                             |
 | **Avoid captive UIs**                    | Prefer command-line interface (shell) for full control.                    |
-| **Config as text files**                 | e.g., `/etc/passwd` stores user data in plain text format.                |
+| **Config as text files**                 | e.g., /etc/passwd stores user data in plain text format.                |
 
 ---
 
@@ -45,3 +45,279 @@ Linux follows a minimalist, modular approach with 5 core principles:
 | **Kernel**         | Manages hardware access, virtualizes resources, isolates processes.         |
 | **Shell**          | Command-line interface to interact with the kernel.                         |
 | **System Utilities**| Provide functionality and user-accessible tools of the OS.                 |
+
+---
+
+# 📂 Linux File System Hierarchy
+
+Linux uses a **tree-like hierarchical structure**, standardized by the **Filesystem Hierarchy Standard (FHS)**. Everything starts from the root directory `/`, and all other directories are mounted underneath it.
+
+---
+
+## 🗂️ Top-Level Directories
+
+| Path       | Description |
+|------------|-------------|
+| `/`        | The **root directory**. Contains the essential files needed to boot the OS before other filesystems are mounted. All other filesystems are mounted here as subdirectories. |
+| `/bin`     | Contains **essential user command binaries** (e.g. `ls`, `cp`, `mv`). |
+| `/boot`    | Contains the **bootloader**, **kernel image**, and other files required to boot Linux. |
+| `/dev`     | Contains **device files** that represent hardware components. |
+| `/etc`     | Contains **system-wide configuration files** for the OS and installed applications. |
+| `/home`    | Contains **user home directories** (e.g. `/home/alex`). |
+| `/lib`     | Contains **shared libraries** needed by binaries in `/bin` and `/sbin`. |
+| `/media`   | Mount point for **removable media** (USB, CD-ROMs, etc.). |
+| `/mnt`     | Temporary mount point for manually mounted filesystems. |
+| `/opt`     | Optional software and **third-party applications** are installed here. |
+| `/root`    | The **home directory of the root user**. |
+| `/sbin`    | Contains **system administration binaries**, used by root. |
+| `/tmp`     | Temporary files used by the OS and applications; usually cleared on reboot. |
+| `/usr`     | Secondary hierarchy for **user utilities**, applications, libraries, and documentation. |
+| `/var`     | Contains **variable data** such as logs, spool files, mail, and cache. |
+
+---
+
+## 🧭 Notes
+
+- This structure is **common across modern Linux distributions**.
+- Understanding it is crucial for system administration, scripting, and cybersecurity tasks.
+
+---
+
+# 🐧 Linux Distributions
+
+## 📌 What is a Linux Distribution?
+
+A **Linux distribution (or distro)** is an operating system built on top of the **Linux kernel**, bundled with a set of software packages, tools, and configurations for different use cases.
+
+You can think of distros as **different branches of the same company**:
+- Same **core employees** → the kernel and system components
+- Same **company culture** → Linux philosophy (modularity, openness)
+- But different **products & services** → packages, configs, UI
+
+---
+
+## 🖥️ Why So Many Distros?
+
+Each distro is tailored for different needs:
+- **Desktops**: User-friendly interfaces, multimedia, customization
+- **Servers**: Stability, security, long-term support
+- **Cybersecurity**: Penetration testing tools, low-level access
+- **Embedded/Mobile**: Lightweight footprint, specific hardware
+
+---
+
+## 🔥 Popular Linux Distributions (General Purpose)
+
+| Distro                     | Use Case                          |
+|----------------------------|-----------------------------------|
+| **Ubuntu**                | Desktop users, beginners          |
+| **Fedora**                | Developers, desktop users         |
+| **CentOS**                | Servers, enterprise (now replaced by Alma/Rocky) |
+| **Debian**                | Stability-focused, servers        |
+| **Red Hat Enterprise Linux (RHEL)** | Paid enterprise computing |
+
+---
+
+## 🛡️ Distributions in Cybersecurity
+
+Cybersecurity pros prefer distros that are:
+- Open source
+- Customizable
+- Packed with security tools
+
+**Common Security-Focused Distros:**
+
+- **Kali Linux** 🥷
+- **Parrot OS**
+- **BlackArch**
+- **BackBox**
+- **Pentoo**
+- **Ubuntu / Debian (configured manually)**
+- **Raspberry Pi OS** (for hardware projects)
+
+---
+
+## 🧠 Debian (In-Depth)
+
+**Debian** is a respected Linux distro known for:
+- 🧱 **Stability & Reliability**
+- 🔄 **APT package manager**
+- 🔐 Strong **security track record**
+
+### 🔧 Key Features
+
+- **Long-term support (LTS)**: Security patches for up to 5 years
+- **Flexible & customizable**
+- Ideal for: Desktops, servers, embedded systems
+- Great for users who want **full control**
+
+### ⚠️ Learning Curve
+
+- More complex to configure than Ubuntu
+- Requires understanding of system internals
+- Without proper depth, simple tasks may feel harder
+
+But:
+> *The more you learn it, the less time you waste.*
+
+---
+
+## ✅ Summary
+
+| Distro       | Strengths                                  |
+|--------------|--------------------------------------------|
+| **Kali Linux** | Best for penetration testing               |
+| **Ubuntu**     | Easy to use, beginner-friendly             |
+| **Debian**     | Reliable, secure, long-term support        |
+| **RHEL / CentOS** | Enterprise-grade, supported by Red Hat    |
+| **Parrot OS**  | Lightweight, privacy-focused, cybersec     |
+| **BlackArch**  | Massive repo of hacking tools (advanced)   |
+
+Linux distros give you freedom to pick exactly what fits your goals — whether you're setting up a web server, reverse engineering malware, or just learning CLI.
+
+---
+
+# 💻 Introduction to Shell
+
+## 🧠 Why Learn the Shell?
+
+- The shell is essential to interacting with Linux systems, especially **servers**.
+- Many **web servers** and **infrastructure machines** run Linux due to its **stability and low error rate**.
+- Mastering the shell means gaining full control over the system — far beyond what a GUI offers.
+
+---
+
+## 🖥️ What Is a Shell?
+
+- A **shell** (also called terminal or command line) is a **text-based interface** between the user and the **Linux kernel**.
+- It allows you to:
+  - Navigate directories
+  - Manage files
+  - Monitor and control system processes
+  - Run automation scripts
+
+### 🧪 Visual Analogy:
+> Think of the **shell** as the **server room** of a building, and the **terminal** as the **reception desk** where you deliver instructions.
+
+---
+
+## 🖼️ Terminal Emulators
+
+**Terminal emulators** are software programs that:
+- Emulate a physical terminal within a GUI
+- Provide access to the shell in a graphical environment
+
+### 🧩 Multiplexers (e.g., `tmux`):
+- Allow multiple terminals in one window
+- Useful for:
+  - Splitting screens
+  - Working in multiple directories
+  - Creating isolated workspaces
+
+🧪 *Example:*  
+A `tmux` setup might show three panes:
+- One with `BloodHound` files  
+- One with `Impacket`  
+- One with `SecLists`  
+All controlled from the same terminal window.
+
+---
+
+## 🐚 Types of Shells
+
+The **most common shell** in Linux is:
+
+- **BASH (Bourne Again Shell)** – part of the GNU project  
+  - Supports scripting
+  - Automates workflows
+  - Offers powerful built-in tools for file/system interaction
+
+### 🔄 Other popular shells:
+
+| Shell | Description |
+|-------|-------------|
+| **Zsh**  | Feature-rich, customizable, used by macOS |
+| **Fish** | User-friendly, smart auto-suggestions |
+| **Ksh**  | KornShell, used in legacy Unix systems |
+| **Tcsh/Csh** | C-style syntax, used in older systems |
+
+---
+
+## ⚙️ Key Benefits of Using the Shell
+
+- Automate tasks with scripts
+- Greater system visibility and control
+- Faster execution of repetitive tasks
+- Essential for cybersecurity, scripting, and penetration testing
+
+---
+
+# 💬 Bash Prompt (PS1) Description
+
+## 🧠 What is the Bash Prompt?
+
+- The **Bash prompt** is the line that appears in the terminal to indicate that the system is ready for input.
+- By default, it shows:
+  - `username` – who you are
+  - `hostname` – the computer name
+  - `current working directory`
+- The prompt usually ends in:
+  - `$` for regular users
+  - `#` for root (privileged user)
+
+
+---
+
+## 📍 Prompt Format Examples
+
+user@hostname:~$        'regular user in home directory'
+root@htb:/htb#          ' root user in /htb directory '
+$                       ' prompt with missing info (PS1 not set)'
+'#'                       ' same, but with root privileges '
+
+| Code           | Description                            |
+| -------------- | -------------------------------------- |
+| `\u`           | Username                               |
+| `\h`           | Hostname (short)                       |
+| `\H`           | Full hostname                          |
+| `\w`           | Full current working directory path    |
+| `\W`           | Base name of current working directory |
+| `\t`           | Time (HH\:MM\:SS, 24-hour format)      |
+| `\@`           | Time (AM/PM format)                    |
+| `\d`           | Date (e.g. "Mon Feb 6")                |
+| `\D{%Y-%m-%d}` | Custom date format (e.g. "2025-07-10") |
+| `\j`           | Number of background jobs              |
+| `\n`           | Newline                                |
+| `\s`           | Name of the shell                      |
+
+---
+
+# 🆘 Getting Help in the Linux Shell
+
+## 🧠 Why It's Important
+
+- You’ll often come across commands or tools you don’t know by heart.
+- Getting help quickly and efficiently is **key to navigating Linux**.
+- There are **multiple built-in ways** to access help and documentation for almost every command.
+
+---
+
+## 🧾 `man` – Manual Pages
+
+- Shows **detailed documentation** about a command.
+- Includes usage, syntax, parameters, and examples.
+
+## Prompt recap
+
+| Method             | Description                             |
+| ------------------ | --------------------------------------- |
+| `man`              | Full manual for the tool                |
+| `--help`           | Quick overview of options               |
+| `-h`               | Short help (tool-dependent)             |
+| `apropos`          | Search man page descriptions by keyword |
+| `explainshell.com` | Online breakdown of complex commands    |
+
+---
+
+
+
