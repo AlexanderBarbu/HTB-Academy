@@ -1,58 +1,7 @@
-## Accessing Windows
-
 ## Table of Contents
-- [Start WMI interactive shell](#start-wmi-interactive-shell)
-- [Run WMI command directly](#run-wmi-command-directly)
-    - [Microsoft Management Console (MMC)](#microsoft-management-console-mmc)
-    - [Key Features](#key-features)
-    - [What Are Snap-ins?](#what-are-snap-ins)
-    - [How to Open](#how-to-open)
-- [Run from Start or Run dialog](#run-from-start-or-run-dialog)
-  - [Windows Subsystem for Linux (WSL)](#windows-subsystem-for-linux-wsl)
-    - [WSL 2](#wsl-2)
-    - [Instalation](#instalation)
-  - [What is Hyper-V](#what-is-hyper-v)
-    - [Definition](#definition)
-    - [What Can Hyper-V Do?](#what-can-hyper-v-do)
-    - [Use in WSL 2](#use-in-wsl-2)
-    - [Enabling Hyper-V](#enabling-hyper-v)
-  - [Desktop Experience vs. Server Core](#desktop-experience-vs-server-core)
-    - [Key Differences](#key-differences)
-    - [GUI Tools Still Available in Server Core](#gui-tools-still-available-in-server-core)
-    - [⚙️ Setup with `Sconfig`](#️-setup-with-sconfig)
-    - [Applications Not Supported on Server Core](#applications-not-supported-on-server-core)
-    - [Summary](#summary)
-    - [Feature Comparison Table](#feature-comparison-table)
-- [Windows Security](#windows-security)
-  - [Security Principles](#security-principles)
-  - [Security Identifier (SID)](#security-identifier-sid)
-    - [Example](#example)
-  - [USER INFORMATION](#user-information)
-    - [SID Structure](#sid-structure)
-    - [Security Accounts Manager (SAM) and Access Control Entries (ACE)](#security-accounts-manager-sam-and-access-control-entries-ace)
-    - [User Account Control (UAC)](#user-account-control-uac)
-      - [Admin Approval Mode](#admin-approval-mode)
-      - [Why It Matters](#why-it-matters)
-  - [Registry](#registry)
-    - [Structure](#structure)
-    - [Root Keys](#root-keys)
-    - [Registry Value Types](#registry-value-types)
-    - [Example: Registry Editor UI](#example-registry-editor-ui)
-  - [Application Whitelisting](#application-whitelisting)
-    - [Key Concepts](#key-concepts-1)
-    - [Benefits of Whitelisting](#benefits-of-whitelisting)
-  - [AppLocker](#applocker)
-    - [Features](#features)
-    - [Rule Types](#rule-types)
-  - [Local Group Policy](#local-group-policy)
-    - [Domain vs Local Group Policy](#domain-vs-local-group-policy)
-    - [What Can Be Configured?](#what-can-be-configured)
-- [Windows Defender Antivirus](#windows-defender-antivirus)
-  - [History](#history)
-  - [Key Features](#key-features-1)
-  - [Configuration \& Management](#configuration--management)
-  - [UI Example](#ui-example)
 
+
+## Accessing Windows
 
 ### Local Access
 If you are reading these words, you have local access to a computer of some kind — smartphone, tablet, laptop, Raspberry Pi, or desktop.  
@@ -126,7 +75,7 @@ Popular RDP client on Linux (used often in HTB modules)
 - CLI utility, supports file transfer, clipboard, display options  
 
 Example:
-```bash
+bash
 xfreerdp /u:<username> /p:<password> /v:<target_ip>
 
 ---
@@ -223,7 +172,7 @@ By default:
 
 ---
 
-### Managing permissions with `icacls`
+### Managing permissions with icacls
 
 We can view/manage NTFS perms via:
 - **GUI** (File Explorer → Security tab)  
@@ -726,7 +675,7 @@ wmic
 # Run WMI command directly
 wmic computersystem get name
 
-In a way, its like linux's SUDO, from what I can tell
+In a way, its like linuxs SUDO, from what I can tell
 
 ---
 
@@ -746,7 +695,7 @@ The **MMC** is a framework for grouping **snap-ins** (admin tools) used to manag
 
 - Allows the creation of **custom admin consoles**
 - Can manage **local and remote** systems
-- Snap-ins are modular and can be added based on the admin's needs
+- Snap-ins are modular and can be added based on the admins needs
 - Custom consoles can be **saved & distributed** to other users
 
 ---
@@ -760,7 +709,7 @@ You use MMC to **group only what you need** into a single custom UI.
 
 ### How to Open
 
-```cmd
+cmd
 # Run from Start or Run dialog
 mmc
 
@@ -782,18 +731,18 @@ mmc
 
 ### Instalation
 
-```powershell
+powershell
 Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
 
 ---
 
 ## What is Hyper-V
 
-**Hyper-V** is Microsoft’s virtualization platform (hypervisor) that allows users to create and manage virtual machines (VMs) on Windows systems.
+**Hyper-V** is Microsofts virtualization platform (hypervisor) that allows users to create and manage virtual machines (VMs) on Windows systems.
 
 ### Definition
 
-Hyper-V is a **Type 1 hypervisor**, meaning it runs directly on the hardware. However, on Windows 10/11, it's implemented within the OS but still behaves like a bare-metal hypervisor. It's built into:
+Hyper-V is a **Type 1 hypervisor**, meaning it runs directly on the hardware. However, on Windows 10/11, its implemented within the OS but still behaves like a bare-metal hypervisor. Its built into:
 
 - Windows 10 Pro, Enterprise, and Education
 - Windows 11 Pro+
@@ -907,7 +856,7 @@ Security is a critical topic in Windows operating systems. Windows systems have 
 
 It includes many built-in features that can be abused and has suffered from a wide variety of critical vulnerabilities, resulting in widely used and very effective remote and local exploits.
 
-Microsoft has improved upon Windows security over the years. As our world's interconnectedness continues to expand and attackers become more sophisticated, Microsoft has continued to add new features that can be used by systems administrators to:
+Microsoft has improved upon Windows security over the years. As our worlds interconnectedness continues to expand and attackers become more sophisticated, Microsoft has continued to add new features that can be used by systems administrators to:
 
 - Harden systems
 - Actively block intrusion attempts
@@ -933,7 +882,7 @@ These entities can be authorized for specific actions. The Windows security mode
 
 Each security principal on a Windows system has a unique **Security Identifier (SID)**. These are automatically generated by the system. Even if two users have the same username, their SIDs will differ, allowing Windows to distinguish between them and manage access rights accurately.
 
-SIDs are stored in the **security database** and are included in a user’s **access token**, which is used to determine what actions the user is authorized to perform.
+SIDs are stored in the **security database** and are included in a users **access token**, which is used to determine what actions the user is authorized to perform.
 
 A SID is composed of:
 
@@ -963,7 +912,7 @@ The general format of a SID looks like this:
 | `S`                                  | Indicates the string is a SID.                                              |
 | `1`                                  | Revision Level — always `1` (so far).                                       |
 | `5`                                  | Identifier Authority — identifies the system or network that issued the SID.|
-| `21`                                 | Subauthority 1 — describes the user's relation/group to the issuing authority.|
+| `21`                                 | Subauthority 1 — describes the users relation/group to the issuing authority.|
 | `674899381-4069889467-2080702030`    | Subauthority 2 — identifies the domain or computer that created the SID.    |
 | `1002`                               | Relative Identifier (RID) — distinguishes the account (user, admin, guest). |
 
@@ -984,7 +933,7 @@ Every thread or process initiated by a user must go through an **authorization p
 
 These access tokens include:
 
-- The user's **SID**
+- The users **SID**
 - A list of group memberships
 - User privileges
 - And other security-relevant metadata
@@ -999,10 +948,10 @@ Understanding these mechanisms is essential during **privilege escalation**, as 
 
 #### Admin Approval Mode
 
-UAC includes an **Admin Approval Mode**, which prompts users for permission or administrator credentials before allowing potentially harmful changes. You've likely encountered this as a popup when trying to install new software or change system settings.
+UAC includes an **Admin Approval Mode**, which prompts users for permission or administrator credentials before allowing potentially harmful changes. Youve likely encountered this as a popup when trying to install new software or change system settings.
 
-- If you're logged in as a **standard user**, UAC will prompt for the **administrator password**.
-- If you're logged in as an **administrator**, you'll see a **confirmation dialog** instead.
+- If youre logged in as a **standard user**, UAC will prompt for the **administrator password**.
+- If youre logged in as an **administrator**, youll see a **confirmation dialog** instead.
 
 This ensures that:
 - Software cannot silently install or modify the system.
@@ -1084,7 +1033,7 @@ There are **11 main value types** that can be assigned inside a subkey:
 - **Whitelisting** = Only **approved applications** are allowed. All else is blocked.
 - **Blacklisting** = Only **known malicious or unwanted apps** are blocked. Everything else is allowed.
 - **Zero Trust Principle**: Everything is denied by default unless explicitly allowed.
-- **Audit Mode**: A recommended first step to ensure legitimate applications aren't blocked by mistake.
+- **Audit Mode**: A recommended first step to ensure legitimate applications arent blocked by mistake.
 
 > ⚠️ Implementing whitelisting in large environments can be challenging.  
 > It should begin in **audit mode** to prevent business disruption.
@@ -1103,7 +1052,7 @@ There are **11 main value types** that can be assigned inside a subkey:
 
 ## AppLocker
 
-**AppLocker** is Microsoft’s native application whitelisting tool, introduced in **Windows 7**.
+**AppLocker** is Microsofts native application whitelisting tool, introduced in **Windows 7**.
 
 ### Features
 
@@ -1157,7 +1106,7 @@ Local Group Policy can be used to control:
 - Network configurations
 - Graphical interface restrictions
 
-> It's especially useful for **locking down standalone systems** with strict security requirements.
+> Its especially useful for **locking down standalone systems** with strict security requirements.
 
 ---
 
@@ -1177,8 +1126,8 @@ Windows Defender Antivirus (Defender), formerly known as Windows Defender, is th
   Monitors and protects against known threats in real time.
 
 - **Cloud-delivered Protection**  
-  Works alongside automatic sample submission to send suspicious files to Microsoft’s cloud for analysis.  
-  Files are “locked” during analysis to prevent damage.
+  Works alongside automatic sample submission to send suspicious files to Microsofts cloud for analysis.  
+  Files are locked during analysis to prevent damage.
 
 - **Tamper Protection**  
   Prevents changes to Defender security settings via:
@@ -1187,7 +1136,7 @@ Windows Defender Antivirus (Defender), formerly known as Windows Defender, is th
   - Group Policy
 
 - **Controlled Folder Access**  
-  Defender's **Ransomware protection** feature.  
+  Defenders **Ransomware protection** feature.  
   Prevents unauthorized changes to specified folders.
 
 ## Configuration & Management
@@ -1207,6 +1156,3 @@ Windows Security dashboard shows:
 - Virus protection: ❌ Off  
 - Account protection: ✅ OK  
 - Firewall: ❌ Off
-
-
-
