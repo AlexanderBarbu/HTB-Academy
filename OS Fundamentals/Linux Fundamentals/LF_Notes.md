@@ -451,3 +451,157 @@ Critical in privilege escalation and situational awareness
 Study their man pages (man id, man uname, etc.) to learn hidden flags and use cases
 
 ---
+
+# 📂 Linux Navigation - HTB Notes
+
+## 🧭 Overview
+
+- Navigation in Linux is like using a mouse in Windows.
+- Learn how to **move between directories**, **list/edit/move/delete files**, **use shortcuts**, **handle redirects**, and understand **file descriptors**.
+- Always test commands in a local VM snapshot to avoid breaking the system.
+
+---
+
+## 📍 Current Directory
+
+- `pwd` → Print the current working directory
+  ```bash
+  pwd
+  # /home/cry0l1t3
+
+## 📄 Listing Directory Contents
+
+- **`ls`** → Lists files/directories in the current folder
+- **`ls -l`** → Long listing format with permissions, owner, size, etc.
+- **`ls -la`** → Long listing including hidden files (starting with .)
+
+## 🫥 Hidden Files
+
+- Files starting with . are hidden
+- Use ls -la to show them
+
+## 🗂️ List Other Directory Contents
+
+- You can list contents without cd:
+ls -l /var/
+
+## 🚶 Directory Navigation
+
+- **`cd`** → Change directory
+- **`cd /full/path`** → Go directly to a path
+- **`cd .. `**→ Move up one level
+- **`cd - `**→ Go back to previous directory
+
+- ⌨️ TAB Autocomplete
+
+**` . `**→ Current directory
+**` .. `**→ Parent directory
+ls -la /dev/shm
+cd ..
+
+## 🧹 Clear Terminal
+
+**`clear`** → Clears the terminal screen
+Ctrl + L → Keyboard shortcut for clear
+
+## 🕘 Command History
+
+↑ / ↓ → Browse previous commands
+Ctrl + R → Search command history with keywords
+
+---
+
+# 📁 Working with Files and Directories
+
+## 🧾 Key Concept
+
+- Unlike Windows, Linux encourages **command-line interaction** with files.
+- Instead of using GUI tools like Explorer, we can **create, access, and modify files** directly from the terminal.
+
+---
+
+## ⚙️ Why Use the Terminal?
+
+- **Faster & more efficient** than GUI.
+- No need for editors like `vim` or `nano` for basic file edits.
+- Ability to:
+  - Access files quickly with simple commands
+  - Use **regex** for targeted edits
+  - Chain multiple commands for batch file handling
+  - Redirect output (`>` `>>`) and automate workflows
+
+---
+
+## 🔥 Advantages of CLI File Management
+
+- Interactive and **scriptable**
+- Can process **many files at once**
+- Saves time vs. doing edits manually in GUI
+- Ideal for automation, scripting, and system maintenance
+
+---
+
+# 🛠️ Create, Move, and Copy - HTB Notes
+
+## 🚀 Starting Point
+
+- Before running file operations, connect to the target via **SSH**.
+
+---
+
+## 📄 Create a File
+
+- **`touch <filename>`** → Creates an empty file
+  
+## 📁 Create a Directory
+
+- **`mkdir <dirname>`** → Creates a single directory
+
+- **`mkdir -p <path>`** → Creates nested directories, including parents if needed
+
+- **`-p`** is useful when building directory structures in one command.
+
+---
+
+# 🛠️ Create, Move, and Copy (Part 2) - HTB Notes
+
+## 🌲 View Directory Structure
+
+- Use `tree` to visualize folder hierarchy:
+
+Example output:
+.
+├── info.txt
+└── Storage
+    └── local
+        └── user
+            └── documents
+
+4 directories, 1 file
+
+## 📄 Create Files in Nested Directories
+
+Use relative path with **` ./ `**to start from the current directory:
+touch ./Storage/local/user/userinfo.txt
+Resulting structure:
+
+.
+├── info.txt
+└── Storage
+    └── local
+        └── user
+            ├── documents
+            └── userinfo.txt
+
+4 directories, 2 files
+✏️ Rename or Move Files with mv
+
+Syntax:
+- **` mv <source> <destination> `**
+
+Rename file:
+
+**` mv info.txt information.txt `**
+
+---
+
