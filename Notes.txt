@@ -1,0 +1,31 @@
+WEB REQUESTS MODULE - Still need notes
+
+Conclusion
+This module covered the essentials of HTTP requests and how we can send HTTP requests with different HTTP methods. Such concepts are necessary for beginning to work with web applications. A successful security professional must understand and be able to explain the core concepts of the technologies that they are charged with attacking, defending, and securing.
+
+As you work on testing web applications, you may primarily be working with proxying tools like Burp Suite or ZAP, so we advise working through the Using Web Proxies module next. However, understanding HTTP requests and their different methods is essential for starting to use such proxying tools. Also, on many occasions, being able to perform quick tests using browser dev tools or cURL would be much faster than switching to a different tool. Furthermore, cURL knowledge is essential for scripting web requests and automating different tests, which may become very handy for exploit development in the future.
+
+Module Key Takeaways
+
+An overview of the HyperText Transfer Protocol (HTTP) and HTTPS (HTTP Secure) protocols
+Working with HTTP requests and responses and their headers
+An understanding of common HTTP methods and response codes
+Interacting with APIs
+Leveraging cURL for interacting with web applications.
+Leveraging Browser DevTools for interacting with web applications.
+
+WINDOWS FUNDAMENTALS MODULE - FIX LAYOUT ON NOTES
+
+Conclusion
+This module covered the essentials for working with the Windows operating system. As you progress through the Academy, you will continue to enhance and refine your skills using the Windows operating system, command line, and PowerShell.
+
+Module Key Takeaways
+
+Windows structure
+Using the command line
+Navigating the Windows operating system
+Working with files and directories
+Service management
+Permissions management
+Windows security fundamentals
+
