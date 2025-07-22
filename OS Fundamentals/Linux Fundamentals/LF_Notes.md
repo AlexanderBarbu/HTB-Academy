@@ -605,3 +605,196 @@ Rename file:
 
 ---
 
+# ✏️ Editing Files
+
+## 🔍 Overview
+- After creating files and directories, we need to **edit** them.
+- Common editors in Linux: **Vi**, **Vim**, **Nano**.
+- We'll start with **Nano** (simple and beginner-friendly), then **Vim** (powerful and modal).
+
+## 🖊️ Using Nano
+
+- Open (or create) a file with **nano**:
+  ```bash
+  nano notes.txt
+
+- This opens the Nano editor and lets you edit text immediately.
+
+### ✅ Nano Basics
+
+- Write text directly in the editor.
+- Important shortcuts (the ^ symbol means CTRL):
+Shortcut	Action
+- **`CTRL + W`**	Search text
+- **`CTRL + O`**	Save file
+- **`CTRL + X`**	Exit Nano
+- **`CTRL + G`**	Help
+
+## 🔐 Important Files for Pentesters
+
+- **` /etc/passwd `** → Holds user info (username, UID, GID, home dir).
+Historically stored password hashes (now in /etc/shadow).
+Misconfigured permissions = potential privilege escalation.
+
+## ⚡ Vim - Vi Improved
+
+- Vim is an open-source, modal text editor.
+- Modal concept → Different modes for different actions.
+  
+### ✅ Vim Modes
+
+Mode	Description: 
+
+- Normal	Default mode; commands (move, delete, copy, etc.)
+- Insert	Insert text into buffer
+- Visual	Select text visually for operations
+Command	Enter commands like :q, :w, :sort, etc.
+Replace	Overwrite existing text
+
+## 🎓 VimTutor
+
+- Practice Vim with built-in tutorial:
+- Approx time: 25-30 mins.
+- Covers essential commands for beginners.
+
+## 🔑 Key Takeaways
+- Nano = Simple, beginner-friendly editor.
+- Vim = Powerful, modal, ideal for advanced editing.
+- Important files (/etc/passwd, /etc/shadow) matter for security.
+- Always check file permissions for privilege escalation opportunities.
+
+---
+
+# 🔍 Find Files and Directories
+
+## ✅ Why It Matters
+- When accessing a Linux system, it's essential to **quickly find files and directories**.
+- Common scenarios:
+  - Locate **configuration files**
+  - Find **scripts created by admins or users**
+  - Check system files for **security issues**
+- No need to manually browse every folder—Linux provides tools for this.
+
+## 📌 `which` Command
+
+- **Purpose:** Displays the path of an executable that would run if the command is executed.
+- **Usage:** Helps verify if programs like `curl`, `netcat`, `wget`, `python`, `gcc` are available.
+  
+### ✅ Syntax:
+```bash
+which <program>
+```
+---
+
+## **Find Command in Linux**
+
+- The `find` command is a powerful utility for **searching files and directories** in Linux. It supports advanced filtering options to locate files based on multiple criteria.
+
+
+### **Purpose**
+- Locate **files and directories** within a specified location.
+- Apply **filters** such as:
+  - **File size**
+  - **Modification date**
+  - **Type** (file or directory)
+
+
+### **Syntax**
+```bash
+find <location> <options>
+```
+
+- **`<location>`** : Directory path to start the search (e.g., /home, . for current directory).
+- **`<options>`**: Flags and conditions to filter results.
+
+- Key Features: 
+  - Supports searching by:
+    - Name
+    - Type (file, directory, symbolic link)
+    - Permissions
+    - Date modified
+- Can execute actions on found files (e.g., delete, move, print).
+
+---
+
+## **Find Command Options Explained**
+
+When using the `find` command, several options can refine the search and define what actions to perform. Below is an explanation of the common options used:
+
+---
+
+### **Options and Their Descriptions**
+
+- **`-type f`**  
+  Defines the type of the searched object. Here, `f` stands for **file**.
+
+- **`-name *.conf`**  
+  Searches for files matching a specific name pattern. The asterisk (`*`) acts as a wildcard, meaning **all files with the `.conf` extension**.
+
+- **`-user root`**  
+  Filters files that are owned by the **root user**.
+
+- **`-size +20k`**  
+  Finds files **larger than 20 KiB**. The `+` sign indicates "greater than."
+
+- **`-newermt 2020-03-03`**  
+  Lists files **modified after** the specified date (`2020-03-03`).
+
+- **`-exec ls -al {} \;`**  
+  Executes a command on each result.  
+  - `{}` acts as a placeholder for the found file.  
+  - `\;` ends the `-exec` command. The backslash escapes the semicolon so it isn’t interpreted by the shell.
+
+- **`2>/dev/null`**  
+  Redirects **STDERR (error messages)** to the null device (`/dev/null`) to hide errors.  
+  *Note:* This is **not an option of `find`** but a shell redirection.
+
+---
+
+### **Example**
+```bash
+find /etc -type f -name "*.conf" -user root -size +20k -newermt 2020-03-03 -exec ls -al {} \; 2>/dev/null
+```
+
+### **Command Breakdown**
+
+This command performs the following:
+
+- **Searches under** `/etc`
+- **For files** (`-type f`)
+- **Named** `*.conf`
+- **Owned by** `root`
+- **Larger than** `20 KiB`
+- **Modified after** `2020-03-03`
+- **Executes** `ls -al` on each result
+- **Hides any errors** by redirecting them to `/dev/null`
+
+---
+
+## **Locate Command in Linux**
+
+The `locate` command provides a **faster way to search for files and directories** compared to `find`. Unlike `find`, which scans the filesystem in real-time, `locate` searches a **local database** containing file and folder paths.
+
+---
+
+### **Key Characteristics**
+- **Works with a pre-built database** instead of real-time scanning.
+- **Faster than `find`** because it doesn’t traverse the filesystem during the search.
+- Requires **database updates** to reflect recent changes.
+
+---
+
+### **Update the Database**
+To ensure the `locate` database is up-to-date:
+```bash
+sudo updatedb
+```
+
+### **Limitations**
+- Fewer filtering options than `find` (e.g., cannot filter by size, date, or ownership).
+- Best used for quick searches by name, not for detailed filtering.
+
+### **When to Use**
+- Use **`locate`** for speed when you just need to find files by name.
+- Use **`find`** when advanced filtering is required (size, permissions, date, etc.).
+
