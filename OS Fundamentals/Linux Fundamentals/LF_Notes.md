@@ -1093,3 +1093,190 @@ When dealing with complex data in Linux, filtering and formatting outputs is ess
 - **Wc:** Count lines, words, or characters.
 - Together, these utilities provide a powerful toolkit for text processing in Linux.
 
+---
+
+# Regular Expressions
+
+Regular expressions (RegEx) are like the art of crafting precise blueprints for searching patterns in text or files. They allow you to find, replace, and manipulate data with incredible precision. Think of RegEx as a highly customizable filter that lets you sift through strings of text, looking for exactly what you need — whether it's analyzing data, validating input, or performing advanced search operations.
+
+At its core, a regular expression is a sequence of characters and symbols that together form a search pattern. These patterns often involve special symbols called metacharacters, which define the structure of the search rather than representing literal text. For example, metacharacters allow you to specify whether you're searching for digits, letters, or any character that fits a certain pattern.
+
+RegEx is available in many programming languages and tools, such as grep or sed, making it a versatile and powerful tool in our toolkit.
+
+---
+
+## Grouping
+
+Regex supports grouping search patterns using three main types of brackets:
+
+### Grouping Operators
+
+| Operator   | Description                                                                 |
+|------------|-----------------------------------------------------------------------------|
+| `(a)`      | Round brackets are used to group parts of a regex pattern for joint matching |
+| `[a-z]`    | Square brackets define a character class — match any one of the listed chars |
+| `{1,10}`   | Curly brackets define quantifiers — how many times the pattern should repeat |
+| `|`        | OR operator — matches if **either** of the expressions is present           |
+| `.*`       | AND-like chaining — matches if **both** patterns exist in the given order    |
+
+---
+
+## Practice Tasks
+
+Use the `/etc/ssh/sshd_config` file to solve the following:
+
+1. Show all lines that do **not** contain the `#` character.
+2. Search for all lines that contain a word that **starts with** `Permit`.
+3. Search for all lines that contain a word **ending with** `Authentication`.
+4. Search for all lines containing the word `Key`.
+5. Search for all lines that **begin with** `Password` and also contain `yes`.
+6. Search for all lines that **end with** `yes`.
+
+---
+
+# Permission Management
+
+In Linux, permissions are like keys that control access to files and directories. These permissions are assigned to both users and groups, much like keys being distributed to specific individuals and teams within an organization. Each user can belong to multiple groups, and being part of a group grants additional access rights, allowing users to perform specific actions on files and directories.
+
+Every file and directory has an **owner (user)** and is associated with a **group**. The permissions for these files are defined for both the owner and the group, determining what actions — like reading, writing, or executing — are allowed. When a user creates a new file or directory, it automatically becomes owned by them and is associated with their primary group.
+
+Linux permissions act like a rule-based system that dictates who can access or modify specific resources, ensuring both **security** and **collaboration** across the system.
+
+---
+
+## Directory Access and Execute Permission
+
+To access a directory, a user must have **execute (`x`) permission** on it. Without it:
+
+- You cannot **enter** or **traverse** the directory.
+- You may still see the directory exists but will encounter **“Permission Denied”** when trying to interact with its contents.
+
+Execute permission on a directory is like a hallway key — it lets you move through the space but **not** necessarily see or change what's inside unless you also have **read (`r`)** and/or **write (`w`)** permissions.
+
+---
+
+## File Permissions Summary
+
+Linux permissions are based on the **octal number system**, with **three main types** of permissions:
+
+| Symbol | Permission | Description                                 |
+|--------|------------|---------------------------------------------|
+| `r`    | Read       | View contents of a file or list a directory |
+| `w`    | Write      | Modify or delete contents                   |
+| `x`    | Execute    | Run files or enter directories              |
+
+Permissions apply to three categories:
+
+- **User** (u): The file owner
+- **Group** (g): Members of the file’s group
+- **Others** (o): Everyone else
+
+---
+
+## Example: File Permission Breakdown
+
+-rwxrw-r-- 1 root root 1641 May 4 23:42 /etc/passwd
+│ │ │ │ │ │ │ │ └── Timestamp
+│ │ │ │ │ │ └────────────── File Size
+│ │ │ │ │ └─────────────────── Group
+│ │ │ │ └──────────────────────── Owner
+│ │ │ └──────────────────────────── Hard Links
+│ │ └─────────────────────────────── Permissions (Others)
+│ └────────────────────────────────── Permissions (Group)
+└──────────────────────────────────── Permissions (Owner)
+
+
+- `-`: Regular file (not directory or symlink)
+- `rwx`: Owner has read, write, execute
+- `rw-`: Group has read, write
+- `r--`: Others have read only
+
+---
+
+# Modifying Directories
+
+- To **traverse** a directory: `x` permission required
+- To **list contents**: `r` permission required
+- To **create/delete/rename** inside: `w` permission required
+
+- **Note:** Changing file contents still depends on **file-level permissions**, not the directory.
+
+---
+
+# Change Permissions
+
+To modify permissions on files or directories, use the `chmod` command along with:
+
+- **u**: user (owner)
+- **g**: group
+- **o**: others
+- **a**: all users
+- **+ / -**: add or remove permission
+
+Example:  
+To add read permission to all users for a file:
+
+- `chmod a+r filename`
+
+You can also use **octal notation**:
+
+| Symbol | Binary | Octal | Permission |
+|--------|--------|-------|------------|
+| r      | 100    | 4     | read       |
+| w      | 010    | 2     | write      |
+| x      | 001    | 1     | execute    |
+
+Example:
+
+- `chmod 754 shell`
+
+Which sets:
+
+- **7 (rwx)** → owner
+- **5 (r-x)** → group
+- **4 (r--)** → others
+
+---
+
+## Change Owner
+
+To change ownership of a file or directory, use the `chown` command:
+``` bash
+chown <user>:<group> <file_or_directory>
+```
+
+- This assigns both user and group ownership of `shell` to `root`.
+
+---
+
+# SUID & SGID
+
+Linux supports **special permissions** for executable files:
+
+- **SUID** (Set User ID): Executes the file as the **file owner**
+- **SGID** (Set Group ID): Executes the file with the **group’s permissions**
+
+### Indicators
+
+- SUID: `s` in **user** execute bit (e.g. `rwsr-xr-x`)
+- SGID: `s` in **group** execute bit (e.g. `rwxr-sr-x`)
+
+### Risks
+
+- Programs with SUID/SGID can **elevate privileges**
+- Misconfigured SUID binaries can lead to **full system compromise**
+
+🔒 **Important:** Use SUID/SGID **with caution**. Tools like [GTFObins](https://gtfobins.github.io) document known binaries that can be exploited if misconfigured.
+
+---
+
+### Sticky Bit
+
+Sticky bits in Linux are like locks on files within shared spaces. When set on a directory, the sticky bit adds an extra layer of security, ensuring that only certain individuals can modify or delete files, even if others have access to the directory.
+
+Imagine a communal workspace where many people can enter and use the same tools, but each person has their own drawer that only they (or the manager) can open. The sticky bit acts like a lock on these drawers, preventing anyone else from tampering with the contents. In a shared directory, this means only the file's owner, the directory's owner, or the root user (the system administrator) can delete or rename files. Other users can still access the directory but can’t modify files they don’t own.
+
+This feature is especially useful in shared environments, like public directories, where multiple users are working together. By setting the sticky bit, you ensure that important files aren’t accidentally or maliciously altered by someone who shouldn’t have the authority to do so, adding an important safeguard to collaborative workspaces.
+
+If the sticky bit is capitalized (`T`), this means that all other users do not have execute (`x`) permissions and, therefore, cannot see the contents of the folder nor run any programs from it. The lowercase sticky bit (`t`) indicates that execute permissions have been set along with the sticky bit.
+
