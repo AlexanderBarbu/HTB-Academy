@@ -1282,5 +1282,538 @@ Linux supports **special permissions** for executable files:
 
 ---
 
+# User Management
+
+Effective user management is essential in Linux administration. Admins must create users, assign them to groups, and control permissions to maintain system security and resource access.
+
+## # Execution as a Different User
+
+- **`sudo`** allows permitted users to run commands with elevated privileges (usually as `root`).
+- **`su`** switches to another user account (default: root) after verifying credentials.
+
+> 🔒 Files like `/etc/shadow` (stores encrypted passwords) are only readable by `root`.
+
+## # Essential User Management Commands
+
+| Command     | Description                                                  |
+|-------------|--------------------------------------------------------------|
+| `sudo`      | Run a command as another user (commonly as root).            |
+| `su`        | Switch to another user (with login shell).                   |
+| `useradd`   | Create a new user.                                           |
+| `userdel`   | Delete a user and optionally their files.                    |
+| `usermod`   | Modify a user's account settings.                            |
+| `addgroup`  | Add a new group to the system.                               |
+| `delgroup`  | Delete a group from the system.                              |
+| `passwd`    | Change a user's password.                                    |
+
+---
+
+# Package Management
+
+Understanding package management is essential for installing, upgrading, and removing software on Linux systems. This knowledge is crucial whether you're managing personal machines, administering servers, or customizing penetration testing environments.
+
+## What Are Packages?
+
+Packages are archive files that contain:
+- Compiled software binaries  
+- Configuration files  
+- Metadata (like version and dependencies)
+
+They provide a consistent, manageable way to:
+- Distribute applications
+- Keep track of versions and updates
+- Resolve and install dependencies
+
+---
+
+## Core Package Management Features
+
+- **Download & install packages**
+- **Resolve dependencies automatically**
+- **Use standardized formats** (`.deb`, `.rpm`, etc.)
+- **Enforce quality & system integration**
+- **Track updates and removals**
+
+---
+
+## Common Package Formats
+
+| Format | Description                        |
+|--------|------------------------------------|
+| `.deb` | Debian-based systems (Ubuntu, Kali) |
+| `.rpm` | RedHat-based systems (Fedora, CentOS) |
+
+---
+
+## Popular Package Management Tools
+
+| Command   | Description |
+|-----------|-------------|
+| **dpkg**  | Core tool for `.deb` packages (low-level) |
+| **apt**   | High-level interface for package management in Debian-based systems |
+| **aptitude** | Alternative to apt with ncurses interface and smarter resolution |
+| **snap**  | Package manager for sandboxed apps (used in modern Ubuntu systems) |
+| **gem**   | Ruby package manager |
+| **pip**   | Python package installer |
+| **git**   | Version control tool, often used to clone and build packages manually |
+
+---
+
+## Lifecycle of a Package (Simplified)
+
+1. **Install**  
+   Downloads the package and its dependencies from a repo → installs all of them
+
+2. **Upgrade**  
+   Replaces the package with a newer version, resolves any new dependencies
+
+3. **Remove**  
+   Deletes the package and optionally its configs, may leave dependencies behind
+
+4. **Purge**  
+   Removes *everything*, including config files
+
+### Best Practices
+
+- Always `update` before `upgrade` (`apt update && apt upgrade`)
+- Use `apt install` over `dpkg -i` for better dependency handling
+- Clean up unused packages with `apt autoremove`
+- Use virtual environments for Python (`venv`) or Ruby (`rvm`) when testing packages
+- Never install random `.deb` files from the internet without verifying the source
+
+---
+
+# Advanced Package Management (APT)
+
+## Overview
+- APT is the package manager used by Debian-based distros like Kali and Parrot.
+- It simplifies installing and updating programs, resolving dependencies automatically.
+- Under the hood, it uses `dpkg`, which works with `.deb` files directly.
+- APT avoids manual dependency management by fetching all required packages.
+
+---
+
+## Repositories
+- Software is fetched from online repositories categorized as:
+  - Stable
+  - Testing
+  - Unstable
+- Most systems use the "main" stable repo.
+- Repository configuration is found at:
+  - `/etc/apt/sources.list`
+  - `/etc/apt/sources.list.d/parrot.list` (in Parrot OS)
+
+---
+
+## APT Cache
+- APT maintains an offline cache with metadata about available packages.
+- This allows searching and inspecting packages without needing an internet connection.
+
+### Common operations:
+- Search the cache for packages
+- Show detailed metadata (version, dependencies, maintainer)
+- List installed packages on the system
+
+---
+
+## Installing Packages via APT
+- Automatically handles downloads, installs, and dependencies.
+- Fetches from configured repositories.
+- Example use case: installing penetration testing tools like `impacket-scripts`.
+
+---
+
+## Git Integration
+- Git is often used to download tools and projects from GitHub.
+- It's common to create dedicated folders for tools (e.g., `~/nishang`) and clone repositories into them.
+- Git provides full version control and local access to scripts and exploits.
+
+---
+
+## DPKG (Low-level package installation)
+- Used to manually install `.deb` packages when downloading them directly.
+- Does not handle dependencies; manual resolution may be needed.
+- Useful when installing tools from archived mirrors or offline sources.
+
+---
+
+## Summary Table
+
+| Tool       | Role                                      | Handles Dependencies | Works Offline | Notes                             |
+|------------|-------------------------------------------|----------------------|---------------|------------------------------------|
+| APT        | High-level package manager                | ✅                   | ✅ (cache)     | Uses repos, resolves dependencies |
+| dpkg       | Low-level package installer for .deb      | ❌                   | ✅             | No dependency resolution          |
+| Git        | Source control + download from GitHub     | ❌                   | ✅             | Used for scripts, not packages    |
+
+---
+
+# Service and Process Management
+
+## Overview
+- Services (daemons) are background programs running without direct user interaction.
+- Two main categories:
+  - **System Services**: Core OS components, run at startup.
+  - **User-Installed Services**: Installed by the user, add functionality.
+
+---
+
+## Naming Convention
+- Daemons usually end in `d`, e.g.:
+  - `sshd`: SSH daemon
+  - `systemd`: Init and service manager
+
+---
+
+## Common Management Tasks
+
+| Goal                             | Description                                    |
+|----------------------------------|------------------------------------------------|
+| Start/Restart a service/process | Make a service or process begin operation     |
+| Stop a service/process           | Halt the service or process                   |
+| Check status                     | View current state and logs                   |
+| Enable/Disable on boot           | Control automatic start during boot           |
+| Find a service/process           | Locate running background tasks               |
+
+---
+
+## Init System: systemd
+- Most modern distros use `systemd`
+- First process that runs at boot
+- Assigned **PID 1**
+- All Linux processes have a **PID** and may have a **PPID** (parent)
+
+---
+
+# Tools & Commands
+
+## systemctl
+- Manage services (start, stop, status, enable, disable)
+- List all services on the system
+
+## ps
+- List active processes
+- Can be filtered using pipes or grep
+
+## journalctl
+- View detailed logs from systemd-managed services
+- Helps in debugging service failures
+
+---
+
+## Kill Signals
+
+| Signal   | Description                                  |
+|----------|----------------------------------------------|
+| SIGHUP   | Terminal closed                              |
+| SIGINT   | Ctrl+C                                       |
+| SIGQUIT  | Ctrl+D                                       |
+| SIGKILL  | Force kill                                   |
+| SIGTERM  | Terminate gracefully                         |
+| SIGSTOP  | Hard stop (cannot be handled)                |
+| SIGTSTP  | Ctrl+Z (suspend, can resume with bg/fg)      |
+
+---
+
+## Process Control
+
+| Task                    | Description                                                |
+|-------------------------|------------------------------------------------------------|
+| Send signal to process  | Use `kill`, `pkill`, `killall`                             |
+| List running jobs       | Use `jobs` to see suspended/background processes           |
+| Background a process    | Use `Ctrl+Z` to suspend, then `bg` to run in background    |
+| Foreground a process    | Use `fg <ID>` to resume interaction                        |
+| Run in background       | Append `&` to command                                      |
+
+---
+
+## Process States
+
+- **Running**: Actively executing
+- **Waiting**: Awaiting resource or event
+- **Stopped**: Suspended by signal
+- **Zombie**: Completed but not removed from process table
+
+---
+
+## Execute Multiple Commands
+
+| Separator | Behavior                                                                    |
+|-----------|-----------------------------------------------------------------------------|
+| `;`       | Run all commands regardless of success/failure                              |
+| `&&`      | Run next command **only if previous succeeded**                             |
+| `|`       | Pipe output of one command to the input of the next                         |
+
+---
+
+### Examples of Command Flow Behavior
+
+| Sequence Type | Continues After Error? | Dependent on Output? |
+|---------------|------------------------|-----------------------|
+| `;`           | ✅ Yes                 | ❌ No                |
+| `&&`          | ❌ No                  | ❌ No                |
+| `|`           | ✅ Yes (usually)       | ✅ Yes              |
+
+---
+
+# Task Scheduling
+
+## Overview
+- Automates repetitive or time-based tasks.
+- Common use cases:
+  - Software updates
+  - Scripted scans
+  - DB maintenance
+  - Log rotation / backups
+  - Malicious persistence techniques
+
+---
+
+# Systemd-Based Scheduling
+
+## Structure
+
+| Component      | Description                                               |
+|----------------|-----------------------------------------------------------|
+| Timer Unit     | Defines *when* the task should run                        |
+| Service Unit   | Defines *what* the task actually does (executes script)   |
+| Activation     | Timer must be started and enabled to persist across reboots |
+
+## Timer Unit Sections
+
+- **[Unit]**: Description of the timer
+- **[Timer]**: Defines timing (e.g. `OnBootSec=`, `OnUnitActiveSec=`)
+- **[Install]**: Enables the timer on boot (`WantedBy=timers.target`)
+
+## Service Unit Sections
+
+- **[Unit]**: Description of the service
+- **[Service]**: Contains `ExecStart=` with the full script path
+- **[Install]**: Ensures the service starts in correct target (`multi-user.target`)
+
+---
+
+# Cron-Based Scheduling
+
+## Crontab Time Format
+
+| Field            | Values       | Description                         |
+|------------------|--------------|-------------------------------------|
+| Minute           | 0-59         | When during the hour                |
+| Hour             | 0-23         | Which hour                          |
+| Day of Month     | 1-31         | Which day of the month              |
+| Month            | 1-12         | Which month                         |
+| Day of Week      | 0-7 (0,7=Sun)| Which day of the week               |
+
+## Crontab Notes
+
+- Tasks are written as:  
+  `MIN HOUR DOM MON DOW /full/path/to/script.sh`
+- Can automate system updates, backups, cleanup, etc.
+- Can log task output or send notifications.
+
+---
+
+## Comparison: systemd vs cron
+
+| Feature            | systemd                                 | cron                             |
+|--------------------|------------------------------------------|----------------------------------|
+| Granularity        | High (events, delays, time)              | Time-based only                  |
+| Logging            | Native via `journalctl`                  | Manual (needs redirection)       |
+| Service handling   | Native support with units                | Limited                          |
+| Syntax complexity  | Higher (multiple files/sections)         | Lower (one-line entries)         |
+| Boot-awareness     | Supports boot triggers (`OnBootSec`)     | Doesn't natively support it      |
+| Best for           | Modern automation, complex tasks         | Simple recurring jobs            |
+
+---
+
+## Why It Matters in Cybersecurity
+
+- **Defensive**: Automate monitoring, updates, backups, auditing.
+- **Offensive**: Abuse task schedulers for persistence, backdoors, data exfil.
+- **Detection**: Spot unauthorized timers or cron entries as part of forensic analysis.
+
+---
+
+# Network Services
+
+## Why It Matters
+- Enables remote access, file transfer, service interaction, and system administration.
+- Misconfigured services can expose credentials, sensitive data, or access points.
+- Crucial for both sysadmins and penetration testers to understand and manipulate securely.
+
+---
+
+## SSH (Secure Shell)
+
+- Provides encrypted remote access to Linux systems.
+- Most common implementation: **OpenSSH**
+- Use cases:
+  - Remote shell access
+  - Secure file transfer
+  - Tunneling / port forwarding
+- Configuration file: `/etc/ssh/sshd_config`
+- Supports authentication via password or key pair.
+
+---
+
+## NFS (Network File System)
+
+- Allows file sharing over the network as if local.
+- Common in shared environments or centralized storage systems.
+- Configuration file: `/etc/exports`
+- Permissions:
+
+| Option          | Description                                             |
+|-----------------|---------------------------------------------------------|
+| `rw`            | Read/Write access                                       |
+| `ro`            | Read-only access                                        |
+| `root_squash`   | Limits client root to non-root privileges               |
+| `no_root_squash`| Grants full root access to client root                  |
+| `sync`          | Data written only after being committed                 |
+| `async`         | Faster, but less safe (possible inconsistencies)        |
+
+- Requires mounting from client systems to access.
+
+---
+
+## Web Server
+
+- Serves HTML, files, APIs over HTTP/HTTPS.
+- Key web server options:
+  - **Apache2** (default on many distros)
+  - **Nginx**
+  - **Lighttpd**
+  - **Python SimpleHTTPServer**
+- Apache config file: `/etc/apache2/apache2.conf`
+- Directory-specific config: `.htaccess`
+- Use cases:
+  - File hosting
+  - Web apps
+  - Phishing payloads or reverse shell delivery
+- Log configuration is important for forensics and threat detection.
+
+---
+
+## Python Web Server
+
+- Lightweight, fast file server for quick transfers.
+- Useful for quick testing or payload delivery during assessments.
+- Default port: 8000 (can be changed)
+
+---
+
+## VPN (Virtual Private Network)
+
+- Encrypted tunnel for accessing remote/internal networks.
+- Common solutions:
+  - **OpenVPN**
+  - L2TP/IPsec
+  - SSTP
+  - SoftEther
+- Admins use it for remote access and secure traffic.
+- Pentesters use it to reach internal resources during engagements.
+- OpenVPN config: `/etc/openvpn/server.conf`
+- Requires `.ovpn` file to connect as client.
+
+---
+
+## Summary Table
+
+| Service     | Role                                      | Config File                        | Key Use Case                      |
+|-------------|-------------------------------------------|------------------------------------|-----------------------------------|
+| SSH         | Remote shell access, tunneling            | `/etc/ssh/sshd_config`             | Secure system management          |
+| NFS         | File sharing across hosts                 | `/etc/exports`                     | Remote access to shared data      |
+| Apache2     | Full-featured web hosting                 | `/etc/apache2/apache2.conf`        | Serve websites, payloads, tools   |
+| Python HTTP | Lightweight web file server               | N/A                                | Quick payload delivery            |
+| OpenVPN     | Secure network tunnel                     | `/etc/openvpn/server.conf`         | Remote access / pivoting          |
+
+---
+
+## Security Insights
+
+- SSH brute-force attacks are common — disable password auth if possible.
+- NFS shares can be abused for privilege escalation or lateral movement.
+- Web servers are high-value targets — XSS, LFI, RCE are common threats.
+- Misconfigured VPNs can expose internal networks externally.
+
+---
+
+# Methodology: Network Services (Enumeration & Exploitation)
 
 
+## 🔐 SSH (Secure Shell)
+
+### Enumeration
+- Identify port (usually 22) via Nmap.
+- Check banner/version: `nmap -sV -p 22 <target>`
+- Test login with common creds or bruteforce (Hydra, Medusa).
+- Inspect `sshd_config` if readable (misconfigured permissions).
+
+### Exploitation Opportunities
+- Weak credentials
+- Key-based auth leaks (e.g. exposed `id_rsa`)
+- Command injection via restricted shells (e.g. git-shell, rbash)
+- Port forwarding/tunneling (pivoting)
+
+---
+
+## 📁 NFS (Network File System)
+
+### Enumeration
+- Port usually 2049 (check with Nmap)
+- List exports: `showmount -e <target>`
+- Mount exported directory: `mount <target>:/exported/path /mnt/target_nfs`
+
+### Exploitation Opportunities
+- `no_root_squash` allows root to write files with UID 0
+- Upload SUID binaries or SSH keys to authorized_keys
+- Access sensitive files due to misconfigured share paths
+
+---
+
+## 🌐 Web Servers (Apache, Python HTTP, etc.)
+
+### Enumeration
+- Identify open HTTP/HTTPS ports (80, 443, 8080, etc)
+- Crawl site and analyze: `gobuster`, `dirsearch`, `whatweb`, `nikto`
+- Check headers, robots.txt, and file uploads
+
+### Exploitation Opportunities
+- LFI/RFI vulnerabilities
+- File upload abuse
+- Default credentials on web panels
+- XSS, SQLi, Command Injection
+
+---
+
+## 🐍 Python Web Server
+
+### Use Cases
+- Fast file transfers during engagements
+- Drop malicious scripts or reverse shells
+- Test client interaction via hosted payloads
+
+---
+
+## 🌍 VPN (OpenVPN)
+
+### Enumeration
+- Look for .ovpn config files on target
+- Identify VPN interfaces via `ifconfig` / `ip a`
+- Monitor routes: `route -n`, `ip route`
+
+### Exploitation Opportunities
+- Misconfigured routing allows lateral movement
+- VPN split-tunneling risks
+- VPN client leaks sensitive internal resources
+
+---
+
+## 🧠 General Tips
+
+- Use `systemctl status <service>` or `ps aux` to validate what’s running.
+- Log all service configuration files when you have read access.
+- Look for creds/tokens inside config files (e.g. `/etc/apache2`, `/etc/ssh`)
+- Pivot through services to internal networks using SSH tunnels or VPN
+
+---
