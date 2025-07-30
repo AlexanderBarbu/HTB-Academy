@@ -1,3 +1,260 @@
+# 📚 Table of Contents
+- [📚 Table of Contents](#-table-of-contents)
+- [🐧 Linux Structure \& Philosophy](#-linux-structure--philosophy)
+  - [📌 What is Linux?](#-what-is-linux)
+  - [🧠 Linux Philosophy](#-linux-philosophy)
+  - [🧩 Linux Components](#-linux-components)
+  - [🏗️ Linux Architecture (Layered View)](#️-linux-architecture-layered-view)
+- [📂 Linux File System Hierarchy](#-linux-file-system-hierarchy)
+  - [🗂️ Top-Level Directories](#️-top-level-directories)
+  - [🧭 Notes](#-notes)
+- [🐧 Linux Distributions](#-linux-distributions)
+  - [📌 What is a Linux Distribution?](#-what-is-a-linux-distribution)
+  - [🖥️ Why So Many Distros?](#️-why-so-many-distros)
+  - [🔥 Popular Linux Distributions (General Purpose)](#-popular-linux-distributions-general-purpose)
+  - [🛡️ Distributions in Cybersecurity](#️-distributions-in-cybersecurity)
+  - [🧠 Debian (In-Depth)](#-debian-in-depth)
+    - [🔧 Key Features](#-key-features)
+    - [⚠️ Learning Curve](#️-learning-curve)
+  - [✅ Summary](#-summary)
+- [💻 Introduction to Shell](#-introduction-to-shell)
+  - [🧠 Why Learn the Shell?](#-why-learn-the-shell)
+  - [🖥️ What Is a Shell?](#️-what-is-a-shell)
+    - [🧪 Visual Analogy:](#-visual-analogy)
+  - [🖼️ Terminal Emulators](#️-terminal-emulators)
+    - [🧩 Multiplexers (e.g., `tmux`):](#-multiplexers-eg-tmux)
+  - [🐚 Types of Shells](#-types-of-shells)
+    - [🔄 Other popular shells:](#-other-popular-shells)
+  - [⚙️ Key Benefits of Using the Shell](#️-key-benefits-of-using-the-shell)
+- [💬 Bash Prompt (PS1) Description](#-bash-prompt-ps1-description)
+  - [🧠 What is the Bash Prompt?](#-what-is-the-bash-prompt)
+  - [📍 Prompt Format Examples](#-prompt-format-examples)
+- [🆘  Getting Help in the Linux Shell](#--getting-help-in-the-linux-shell)
+  - [🧠 Why It's Important](#-why-its-important)
+  - [🧾 `man` – Manual Pages](#-man--manual-pages)
+  - [Prompt recap](#prompt-recap)
+- [🧠 System Information (Linux Basics)](#-system-information-linux-basics)
+  - [🖥️ Basic System \& User Info](#️-basic-system--user-info)
+  - [🌐 Network \& Interface Info](#-network--interface-info)
+  - [👥 Users \& Sessions](#-users--sessions)
+  - [💽 Devices \& Storage](#-devices--storage)
+  - [⚙️ Processes](#️-processes)
+  - [🛠️ Pro Tips](#️-pro-tips)
+    - [📟 Essential Commands After Login](#-essential-commands-after-login)
+    - [🧠 Why It Matters](#-why-it-matters)
+- [📂 Linux Navigation - HTB Notes](#-linux-navigation---htb-notes)
+  - [🧭 Overview](#-overview)
+  - [📍 Current Directory](#-current-directory)
+  - [**Find Command in Linux**](#find-command-in-linux)
+    - [**Purpose**](#purpose)
+    - [**Syntax**](#syntax)
+  - [**Find Command Options Explained**](#find-command-options-explained)
+    - [**Options and Their Descriptions**](#options-and-their-descriptions)
+    - [**Example**](#example)
+    - [**Command Breakdown**](#command-breakdown)
+  - [**Locate Command in Linux**](#locate-command-in-linux)
+    - [**Key Characteristics**](#key-characteristics)
+    - [**Update the Database**](#update-the-database)
+    - [**Limitations**](#limitations)
+    - [**When to Use**](#when-to-use)
+- [**File Descriptors and Redirections**](#file-descriptors-and-redirections)
+    - [**Analogy**](#analogy)
+    - [**Default File Descriptors in Linux**](#default-file-descriptors-in-linux)
+    - [**STDIN and STDOUT Example**](#stdin-and-stdout-example)
+  - [**STDOUT and STDERR**](#stdout-and-stderr)
+    - [**Redirecting STDERR**](#redirecting-stderr)
+    - [**Redirecting STDOUT to a File**](#redirecting-stdout-to-a-file)
+    - [**Redirecting STDOUT and STDERR to Separate Files**](#redirecting-stdout-and-stderr-to-separate-files)
+    - [**Redirecting STDIN**](#redirecting-stdin)
+    - [**Appending STDOUT to an Existing File**](#appending-stdout-to-an-existing-file)
+    - [**Redirecting STDIN Stream with EOF**](#redirecting-stdin-stream-with-eof)
+  - [**Pipes**](#pipes)
+    - [**How Pipes Work**](#how-pipes-work)
+    - [**Common Usage Example**](#common-usage-example)
+    - [**Chaining Multiple Commands**](#chaining-multiple-commands)
+    - [**Why It Matters**](#why-it-matters)
+  - [**In Summary**](#in-summary)
+- [**Filter Contents**](#filter-contents)
+  - [**Pagers: `more` and `less`**](#pagers-more-and-less)
+    - [**Why Use Pagers?**](#why-use-pagers)
+    - [**Before Filtering**](#before-filtering)
+    - [**Example Scenario**](#example-scenario)
+    - [**Key Takeaway**](#key-takeaway)
+  - [**Filtering and Viewing File Contents**](#filtering-and-viewing-file-contents)
+    - [**1. Less**](#1-less)
+    - [**2. Head**](#2-head)
+    - [**3. Tail**](#3-tail)
+    - [**4. Sort**](#4-sort)
+    - [**5. Grep**](#5-grep)
+  - [**Why These Tools Matter**](#why-these-tools-matter)
+    - [**Key Takeaways**](#key-takeaways)
+- [**Advanced Text Processing and Filtering Tools**](#advanced-text-processing-and-filtering-tools)
+    - [**1. Cut**](#1-cut)
+    - [**2. Tr (Translate)**](#2-tr-translate)
+    - [**3. Column**](#3-column)
+    - [**4. Awk**](#4-awk)
+    - [**5. Sed (Stream Editor)**](#5-sed-stream-editor)
+    - [**6. Wc (Word Count)**](#6-wc-word-count)
+    - [**Practice and Exploration**](#practice-and-exploration)
+    - [**Key Takeaways**](#key-takeaways-1)
+- [Regular Expressions](#regular-expressions)
+  - [Grouping](#grouping)
+    - [Grouping Operators](#grouping-operators)
+- [Permission Management](#permission-management)
+  - [Directory Access and Execute Permission](#directory-access-and-execute-permission)
+  - [File Permissions Summary](#file-permissions-summary)
+  - [Example: File Permission Breakdown](#example-file-permission-breakdown)
+- [Modifying Directories](#modifying-directories)
+- [Change Permissions](#change-permissions)
+  - [Change Owner](#change-owner)
+- [SUID \& SGID](#suid--sgid)
+    - [Indicators](#indicators)
+    - [Risks](#risks)
+    - [Sticky Bit](#sticky-bit)
+- [User Management](#user-management)
+  - [# Execution as a Different User](#-execution-as-a-different-user)
+  - [# Essential User Management Commands](#-essential-user-management-commands)
+- [Package Management](#package-management)
+  - [What Are Packages?](#what-are-packages)
+  - [Core Package Management Features](#core-package-management-features)
+  - [Common Package Formats](#common-package-formats)
+  - [Popular Package Management Tools](#popular-package-management-tools)
+  - [Lifecycle of a Package (Simplified)](#lifecycle-of-a-package-simplified)
+    - [Best Practices](#best-practices)
+- [Advanced Package Management (APT)](#advanced-package-management-apt)
+  - [Overview](#overview)
+  - [Repositories](#repositories)
+  - [APT Cache](#apt-cache)
+    - [Common operations:](#common-operations)
+  - [Installing Packages via APT](#installing-packages-via-apt)
+  - [Git Integration](#git-integration)
+  - [DPKG (Low-level package installation)](#dpkg-low-level-package-installation)
+  - [Summary Table](#summary-table)
+- [Service and Process Management](#service-and-process-management)
+  - [Overview](#overview-1)
+  - [Naming Convention](#naming-convention)
+  - [Common Management Tasks](#common-management-tasks)
+  - [Init System: systemd](#init-system-systemd)
+- [Tools \& Commands](#tools--commands)
+  - [systemctl](#systemctl)
+  - [ps](#ps)
+  - [journalctl](#journalctl)
+  - [Kill Signals](#kill-signals)
+  - [Process Control](#process-control)
+  - [Process States](#process-states)
+  - [Execute Multiple Commands](#execute-multiple-commands)
+    - [Examples of Command Flow Behavior](#examples-of-command-flow-behavior)
+- [Task Scheduling](#task-scheduling)
+  - [Overview](#overview-2)
+- [Systemd-Based Scheduling](#systemd-based-scheduling)
+  - [Structure](#structure)
+  - [Timer Unit Sections](#timer-unit-sections)
+  - [Service Unit Sections](#service-unit-sections)
+- [Cron-Based Scheduling](#cron-based-scheduling)
+  - [Crontab Time Format](#crontab-time-format)
+  - [Crontab Notes](#crontab-notes)
+  - [Comparison: systemd vs cron](#comparison-systemd-vs-cron)
+  - [Why It Matters in Cybersecurity](#why-it-matters-in-cybersecurity)
+- [Network Services](#network-services)
+  - [Why It Matters](#why-it-matters-1)
+  - [SSH (Secure Shell)](#ssh-secure-shell)
+  - [NFS (Network File System)](#nfs-network-file-system)
+  - [Web Server](#web-server)
+  - [Python Web Server](#python-web-server)
+  - [VPN (Virtual Private Network)](#vpn-virtual-private-network)
+  - [Summary Table](#summary-table-1)
+  - [Security Insights](#security-insights)
+- [Methodology: Network Services (Enumeration \& Exploitation)](#methodology-network-services-enumeration--exploitation)
+  - [🔐 SSH (Secure Shell)](#-ssh-secure-shell)
+    - [Enumeration](#enumeration)
+    - [Exploitation Opportunities](#exploitation-opportunities)
+  - [📁 NFS (Network File System)](#-nfs-network-file-system)
+    - [Enumeration](#enumeration-1)
+    - [Exploitation Opportunities](#exploitation-opportunities-1)
+  - [🌐 Web Servers (Apache, Python HTTP, etc.)](#-web-servers-apache-python-http-etc)
+    - [Enumeration](#enumeration-2)
+    - [Exploitation Opportunities](#exploitation-opportunities-2)
+  - [🐍 Python Web Server](#-python-web-server)
+    - [Use Cases](#use-cases)
+  - [🌍 VPN (OpenVPN)](#-vpn-openvpn)
+    - [Enumeration](#enumeration-3)
+    - [Exploitation Opportunities](#exploitation-opportunities-3)
+  - [🧠 General Tips](#-general-tips)
+- [Working with Web Services](#working-with-web-services)
+  - [🔧 Web Servers Overview](#-web-servers-overview)
+  - [🏗 Apache Web Server](#-apache-web-server)
+    - [Common Modules](#common-modules)
+  - [🌐 Port Configuration](#-port-configuration)
+  - [🌍 Testing the Web Server](#-testing-the-web-server)
+  - [🧰 CLI Tools for Web Interaction](#-cli-tools-for-web-interaction)
+    - [curl](#curl)
+    - [wget](#wget)
+  - [🐍 Python HTTP Server](#-python-http-server)
+  - [🛠 Tools Comparison](#-tools-comparison)
+  - [💭 Pentesting \& Real-World Relevance](#-pentesting--real-world-relevance)
+- [Backup and Restore](#backup-and-restore)
+  - [🧱 Backup Tools on Linux](#-backup-tools-on-linux)
+  - [🔁 rsync Key Concepts](#-rsync-key-concepts)
+    - [Common Flags](#common-flags)
+  - [📥 Local Backup Example](#-local-backup-example)
+  - [🔐 Encrypted Transfers](#-encrypted-transfers)
+  - [🔄 Restore with rsync](#-restore-with-rsync)
+  - [🧠 Auto-Sync with Cron](#-auto-sync-with-cron)
+    - [Cron Entry Format](#cron-entry-format)
+- [Containerization](#containerization)
+  - [Overview](#overview-3)
+  - [Advantages](#advantages)
+  - [Docker](#docker)
+    - [What is Docker?](#what-is-docker)
+    - [Analogy](#analogy-1)
+    - [Docker Workflow](#docker-workflow)
+    - [Key Docker Concepts](#key-docker-concepts)
+    - [Useful Docker Commands](#useful-docker-commands)
+    - [Persistence \& State](#persistence--state)
+  - [LXC (Linux Containers)](#lxc-linux-containers)
+    - [What is LXC?](#what-is-lxc)
+    - [LXC vs Docker](#lxc-vs-docker)
+    - [LXC Core Tools](#lxc-core-tools)
+    - [Isolation with Namespaces](#isolation-with-namespaces)
+    - [Resource Limits (Cgroups)](#resource-limits-cgroups)
+    - [Security Tips](#security-tips)
+  - [Container Use Cases in Pentesting](#container-use-cases-in-pentesting)
+  - [Practice Exercises](#practice-exercises)
+- [Network Configuration](#network-configuration)
+  - [🌐 Interface Configuration](#-interface-configuration)
+  - [🔐 Network Access Control (NAC)](#-network-access-control-nac)
+  - [🧰 Troubleshooting Tools](#-troubleshooting-tools)
+  - [🛡️ Hardening Tools](#️-hardening-tools)
+  - [🧠 Tips](#-tips)
+- [Linux Security](#linux-security)
+  - [🔒 System Hardening Basics](#-system-hardening-basics)
+  - [🔍 Regular System Auditing](#-regular-system-auditing)
+  - [🛡️ Access Control Mechanisms](#️-access-control-mechanisms)
+  - [🗂️ General Security Practices](#️-general-security-practices)
+- [TCP Wrappers](#tcp-wrappers)
+    - [🟩 Example `/etc/hosts.allow`](#-example-etchostsallow)
+    - [🟥 Example `/etc/hosts.deny`](#-example-etchostsdeny)
+- [🔥 Firewall Setup](#-firewall-setup)
+  - [🎯 Purpose](#-purpose)
+  - [🛡️ Evolution](#️-evolution)
+  - [🔧 iptables Components](#-iptables-components)
+  - [📋 Tables Overview](#-tables-overview)
+  - [🧱 Built-in Chains (Examples)](#-built-in-chains-examples)
+  - [🎯 Targets](#-targets)
+  - [🎯 Matches](#-matches)
+  - [⚙️ Example Rule](#️-example-rule)
+  - [🧪 Practical Checklist](#-practical-checklist)
+- [📄 System Logs](#-system-logs)
+  - [🔒 Logging Best Practices](#-logging-best-practices)
+  - [🧩 Types of Logs](#-types-of-logs)
+  - [🧠 Kernel Logs](#-kernel-logs)
+  - [🖥️ System Logs](#️-system-logs)
+  - [🔑 Authentication Logs](#-authentication-logs)
+  - [📦 Application Logs](#-application-logs)
+  - [🛡️ Security Logs](#️-security-logs)
+  - [🧰 Useful Commands](#-useful-commands)
+---
+
 # 🐧 Linux Structure & Philosophy
 
 ## 📌 What is Linux?
@@ -1111,26 +1368,13 @@ Regex supports grouping search patterns using three main types of brackets:
 
 ### Grouping Operators
 
-| Operator   | Description                                                                 |
-|------------|-----------------------------------------------------------------------------|
+| Operator   | Description                                                                  |
+|------------|------------------------------------------------------------------------------|
 | `(a)`      | Round brackets are used to group parts of a regex pattern for joint matching |
 | `[a-z]`    | Square brackets define a character class — match any one of the listed chars |
 | `{1,10}`   | Curly brackets define quantifiers — how many times the pattern should repeat |
-| `|`        | OR operator — matches if **either** of the expressions is present           |
+| `|`        | OR operator — matches if **either** of the expressions is present            |
 | `.*`       | AND-like chaining — matches if **both** patterns exist in the given order    |
-
----
-
-## Practice Tasks
-
-Use the `/etc/ssh/sshd_config` file to solve the following:
-
-1. Show all lines that do **not** contain the `#` character.
-2. Search for all lines that contain a word that **starts with** `Permit`.
-3. Search for all lines that contain a word **ending with** `Authentication`.
-4. Search for all lines containing the word `Key`.
-5. Search for all lines that **begin with** `Password` and also contain `yes`.
-6. Search for all lines that **end with** `yes`.
 
 ---
 
@@ -1817,3 +2061,668 @@ They provide a consistent, manageable way to:
 - Pivot through services to internal networks using SSH tunnels or VPN
 
 ---
+
+# Working with Web Services
+
+## 🔧 Web Servers Overview
+
+- Web servers serve static and dynamic content over HTTP/HTTPS.
+- Commonly used servers:
+  - **Apache2** (modular, widely used)
+  - **Nginx**
+  - **Python HTTP Server** (lightweight, fast testing)
+- Configuration involves setting ports, modules, and accessible directories.
+
+---
+
+## 🏗 Apache Web Server
+
+- Acts as the "engine" behind web communication.
+- Fully modular (e.g. `mod_ssl`, `mod_proxy`, `mod_rewrite`, `mod_headers`)
+- Supports dynamic content via PHP, Perl, Ruby, Python, etc.
+- Default config file: `/etc/apache2/apache2.conf`
+- Default web root: `/var/www/html`
+
+### Common Modules
+
+| Module        | Purpose                                             |
+|---------------|-----------------------------------------------------|
+| `mod_ssl`     | Enables HTTPS (TLS encryption)                      |
+| `mod_proxy`   | Handles reverse proxying and load balancing         |
+| `mod_headers` | Manages custom headers and policies                 |
+| `mod_rewrite` | URL rewriting and redirection                       |
+
+---
+
+## 🌐 Port Configuration
+
+- Apache listens on port **80** by default.
+- To change, edit: `/etc/apache2/ports.conf`
+- Also update: `/etc/apache2/sites-enabled/000-default.conf`
+- Common alternate port: **8080**
+
+---
+
+## 🌍 Testing the Web Server
+
+- Verify with `http://localhost` or `curl http://localhost`
+- Default page: “It works!” confirms successful setup
+
+---
+
+## 🧰 CLI Tools for Web Interaction
+
+### curl
+
+- Used to send HTTP/HTTPS requests and receive raw HTML
+- Prints output to terminal (STDOUT)
+- Good for:
+  - Verifying server response
+  - Inspecting headers
+  - Automation via scripts
+
+### wget
+
+- Downloads files or web pages from HTTP, HTTPS, or FTP
+- Stores content to local file
+- Great for:
+  - Fetching files
+  - Web scraping
+  - Offline copies
+
+---
+
+## 🐍 Python HTTP Server
+
+- Lightweight local server, great for file transfers
+- Usage starts at current directory
+- Default port: **8000**
+- Supports:
+  - Hosting payloads or exploits
+  - Serving HTML locally
+  - Directory listings
+
+---
+
+## 🛠 Tools Comparison
+
+| Tool/Service     | Role                        | Output Type   | Default Port | Best For                              |
+|------------------|-----------------------------|----------------|---------------|----------------------------------------|
+| Apache2          | Full web server              | Rendered HTML | 80 / 443     | Hosting static/dynamic websites       |
+| Python Server    | Lightweight web server       | File index    | 8000         | Quick local hosting                    |
+| curl             | HTTP request tool            | Terminal text | N/A          | Fetching response body/headers        |
+| wget             | HTTP download tool           | Local file    | N/A          | Downloading resources/files           |
+
+---
+
+## 💭 Pentesting & Real-World Relevance
+
+- Understanding web services allows:
+  - Local server hosting for
+
+---
+
+# Backup and Restore
+
+## 🧱 Backup Tools on Linux
+
+| Tool        | Purpose                          | CLI or GUI | Supports Encryption | Notes                           |
+|-------------|----------------------------------|------------|----------------------|----------------------------------|
+| rsync       | Efficient local/remote sync      | CLI        | Via SSH              | Incremental + compression       |
+| duplicity   | Secure remote backups            | CLI        | ✅ Yes               | Uses rsync + GPG encryption     |
+| deja-dup    | Simple GUI for backups           | GUI        | ✅ Yes               | Built on duplicity              |
+
+---
+
+## 🔁 rsync Key Concepts
+
+- Only syncs changed blocks → highly efficient
+- Preserves permissions, ownership, timestamps
+- Can use SSH for encrypted transfer
+- Supports compression, deletion, backup directories
+
+### Common Flags
+
+| Flag      | Purpose                                 |
+|-----------|------------------------------------------|
+| `-a`      | Archive mode (preserves file properties) |
+| `-v`      | Verbose output                           |
+| `-z`      | Compress file data during the transfer   |
+| `--delete`| Delete files at destination not in source|
+| `--backup`| Create backups of overwritten files      |
+| `--backup-dir=`| Location to store backup copies     |
+| `-e ssh`  | Use SSH for secure data transfer         |
+
+---
+
+## 📥 Local Backup Example
+
+- Sync directory locally:
+  - Source: `/path/to/mydirectory`
+  - Destination: `/backup_server:/path/to/backup/directory`
+
+---
+
+## 🔐 Encrypted Transfers
+
+- Use SSH in rsync with `-e ssh`
+- Encrypts data in transit
+- Enhances confidentiality and integrity
+- Combine with firewalls and key-based auth for strong protection
+
+---
+
+## 🔄 Restore with rsync
+
+- Inverse direction:
+  - From backup server → to local directory
+  - Same options, just flip source and destination
+
+---
+
+## 🧠 Auto-Sync with Cron
+
+1. Create an `rsync` script (e.g., `RSYNC_Backup.sh`)
+2. Add execute permission: `chmod +x`
+3. Set up SSH key-based auth with `ssh-keygen` and `ssh-copy-id`
+4. Add cron job:
+
+### Cron Entry Format
+
+| Field       | Meaning                  |
+|-------------|---------------------------|
+| `0 * * * *` | Run every hour on the hour|
+
+---
+
+# Containerization
+
+## Overview
+- Containerization: Running apps in isolated, lightweight environments.
+- Tools: Docker, Docker Compose, LXC.
+- Shares host OS kernel, unlike VMs.
+
+## Advantages
+- Portability
+- Lightweight
+- Isolation
+- Security
+
+## Docker
+
+### What is Docker?
+- App-focused containerization platform.
+- Uses layered images.
+- Popular for reproducibility & CI/CD.
+
+### Analogy
+Docker container = sealed lunchbox. Portable, disposable, consistent.
+
+### Docker Workflow
+- Build image from Dockerfile.
+- Run container from image.
+- Use Docker Hub for prebuilt images or sharing.
+
+### Key Docker Concepts
+- Dockerfile: recipe to build images.
+- Image: read-only template.
+- Container: running instance of image.
+- Port mapping, volumes, environment variables for customization.
+
+### Useful Docker Commands
+- `docker ps` — List running containers.
+- `docker stop/start/restart <id>` — Manage containers.
+- `docker rm <id>` — Remove container.
+- `docker rmi <image>` — Remove image.
+- `docker logs <id>` — View logs.
+
+### Persistence & State
+- Containers are stateless by default.
+- Use volumes or rebuild images for persistent state.
+- Use `docker build -t <tag> .` to rebuild new image from Dockerfile.
+
+## LXC (Linux Containers)
+
+### What is LXC?
+- System-level containerization using cgroups & namespaces.
+- More "VM-like" than Docker but lighter than full virtualization.
+
+### LXC vs Docker
+
+| Category       | Docker                                | LXC                                    |
+|----------------|----------------------------------------|-----------------------------------------|
+| Approach       | Application-focused                    | System-level containerization           |
+| Image Format   | Dockerfile-based                       | Manual setup                            |
+| Portability    | High (Docker Hub, registries)          | Low                                     |
+| Ease of Use    | Beginner-friendly CLI, DevOps ready    | Requires Linux sysadmin skills          |
+| Security       | AppArmor, SELinux, RO FS               | Needs manual hardening                  |
+
+### LXC Core Tools
+- `lxc-create` — Create container.
+- `lxc-start/stop/restart` — Control container state.
+- `lxc-attach` — Enter container shell.
+- `lxc-ls` — List containers.
+
+### Isolation with Namespaces
+- PID (process)
+- NET (network interfaces)
+- MNT (filesystem)
+- IPC (interprocess comms)
+- UTS (hostname/domain)
+- USER (user/group IDs)
+
+### Resource Limits (Cgroups)
+- `lxc.cgroup.cpu.shares = 512`
+- `lxc.cgroup.memory.limit_in_bytes = 512M`
+
+### Security Tips
+- Restrict SSH or allowlist IPs.
+- Limit CPU/mem usage.
+- Patch containers & base OS.
+- Harden container config.
+- Disable unnecessary services.
+
+## Container Use Cases in Pentesting
+- File hosting (HTTP/SSH).
+- Simulating vulnerable environments.
+- Controlled malware/exploit testing.
+- Reproducing target environments.
+- Running attack tools in isolated space.
+
+## Practice Exercises
+1. Install LXC and create a container.
+2. Configure networking for LXC.
+3. Build custom LXC image.
+4. Apply CPU/memory/disk quotas.
+5. Use LXC to host a service.
+6. Enable SSH into LXC.
+7. Test persistence.
+8. Simulate vulnerable app in container.
+9. Practice exploit dev safely in isolated space.
+
+---
+
+# Network Configuration
+
+## 🌐 Interface Configuration
+| Tool     | Purpose                                      |
+|----------|----------------------------------------------|
+| `ifconfig` | View/assign IP, netmask (deprecated)       |
+| `ip`       | Modern tool to manage interfaces, routes   |
+
+- Activate interface: `ifconfig eth0 up` / `ip link set eth0 up`
+- Assign IP: `ifconfig eth0 192.168.1.2`
+- Set netmask: `ifconfig eth0 netmask 255.255.255.0`
+- Add gateway: `route add default gw 192.168.1.1 eth0`
+- Edit DNS:
+  - Temporary: `/etc/resolv.conf`
+  - Persistent: via `/etc/network/interfaces` or NM/systemd-resolved
+- Make config persistent:
+
+**`/etc/network/interfaces`**
+**`auto eth0`**
+**`iface eth0 inet static`**
+**`address 192.168.1.2`**
+**`netmask 255.255.255.0`**
+**`gateway 192.168.1.1`**
+**`dns-nameservers 8.8.8.8 8.8.4.4`**
+
+## 🔐 Network Access Control (NAC)
+| Model | Description |
+|-------|-------------|
+| DAC   | Owner sets permissions (e.g. `chmod`) |
+| MAC   | OS-enforced; label-based (e.g. SELinux) |
+| RBAC  | Role-based; user roles define access |
+
+- SELinux → label-based, kernel-enforced (strict)
+- AppArmor → profile-based, simpler
+- TCP Wrappers → allow/deny based on IP (`/etc/hosts.allow`, `/etc/hosts.deny`)
+
+## 🧰 Troubleshooting Tools
+| Tool        | Use                          |
+|-------------|-------------------------------|
+| ping        | Reachability (ICMP echo)      |
+| traceroute  | Trace network path            |
+| netstat -a  | List all open connections     |
+| tcpdump     | Packet capture (CLI)          |
+| wireshark   | GUI packet analyzer           |
+| nmap        | Port scanning / enumeration   |
+
+## 🛡️ Hardening Tools
+| Tool         | Type | Details |
+|--------------|------|---------|
+| SELinux      | MAC  | High security, complex to manage |
+| AppArmor     | MAC  | Easier profiles, simpler usage  |
+| TCP Wrappers | NAC  | IP-based access control         |
+
+## 🧠 Tips
+- Prefer `ip` over `ifconfig` (modern toolchain)
+- Changes to `/etc/resolv.conf` may be overwritten — use NM or systemd for persistent DNS
+- Restart networking: `systemctl restart networking`
+- Use `ip addr`, `ip link`, `ip route` for modern interface/network info
+
+---
+
+# Linux Security
+
+## 🔒 System Hardening Basics
+- **Keep system and packages updated**  
+  `apt update && apt dist-upgrade`
+- **Configure firewall/iptables** to restrict inbound and outbound traffic
+- **Harden SSH access**:
+  - Disable password authentication
+  - Disable root login
+  - Use key-based authentication only
+- **Avoid using root directly** — assign minimal sudo rights via `/etc/sudoers`
+- **Enable fail2ban**: bans IPs after failed login attempts
+
+---
+
+## 🔍 Regular System Auditing
+- Check for:
+  - Outdated kernel versions
+  - User permission misconfigurations
+  - World-writable files
+  - Misconfigured cron jobs and services
+  - Dangerous SUID/SGID binaries
+
+**Recommended tools**:
+- `chkrootkit`
+- `rkhunter`
+- `Lynis`
+- `Snort`
+
+---
+
+## 🛡️ Access Control Mechanisms
+
+| Tool       | Functionality                                                                 |
+|------------|--------------------------------------------------------------------------------|
+| **SELinux** | Kernel-level Mandatory Access Control (MAC) using labels and policies         |
+| **AppArmor**| Profile-based MAC, easier to configure than SELinux                           |
+| **sudoers** | Fine-grained command access for users                                         |
+| **PAM**     | Pluggable Authentication Modules (e.g., password aging, lockout policies)     |
+
+---
+
+## 🗂️ General Security Practices
+- Remove or disable unnecessary services/software
+- Eliminate services using unencrypted authentication
+- Enable NTP and ensure syslog is running
+- Assign **individual user accounts**
+- Enforce **strong password policies**
+- Use **password aging** and prevent reuse
+- Lock accounts after repeated login failures
+- Disable unnecessary SUID/SGID binaries
+
+> 🔁 Security is a **process**, not a product. Admin knowledge and vigilance are key.
+
+---
+
+# TCP Wrappers
+
+TCP Wrappers restrict access to services based on IP or hostname. They operate using two files:
+
+- `/etc/hosts.allow`
+- `/etc/hosts.deny`
+
+Rules in these files determine whether a client is allowed or denied access to a service.
+
+### 🟩 Example `/etc/hosts.allow`
+```
+sshd : 10.129.14.0/24
+ftpd : 10.129.14.10
+telnetd : .inlanefreight.local
+```
+
+### 🟥 Example `/etc/hosts.deny`
+```
+ALL : .inlanefreight.com
+sshd : 10.129.22.22
+ftpd : 10.129.22.0/24
+```
+
+- The **first matching rule** is applied.
+- TCP Wrappers **do not replace firewalls** — they only control access to services, not ports.
+
+---
+
+# 🔥 Firewall Setup
+
+## 🎯 Purpose
+Firewalls are used to:
+- Control & monitor network traffic
+- Protect against unauthorized access & malicious activity
+- Filter based on IPs, ports, protocols, etc.
+
+---
+
+## 🛡️ Evolution
+
+| Tool       | Description                                                              |
+|------------|--------------------------------------------------------------------------|
+| `iptables` | CLI tool introduced in Linux 2.4 kernel — filters/modifies packets       |
+| `nftables` | Modern replacement of iptables — better syntax, performance              |
+| `ufw`      | "Uncomplicated Firewall" — user-friendly interface over iptables         |
+| `firewalld`| Dynamic firewall using zones & services for easier management            |
+
+---
+
+## 🔧 iptables Components
+
+| Component | Description                                                                  |
+|-----------|------------------------------------------------------------------------------|
+| Tables    | Categories of rules based on traffic type (e.g., filter, nat, mangle)         |
+| Chains    | Group of rules applied to a type of traffic (INPUT, OUTPUT, FORWARD, etc.)   |
+| Rules     | Define match conditions and action (ACCEPT, DROP, etc.)                      |
+| Matches   | Conditions like port, protocol, IP, etc. to match traffic                   |
+| Targets   | Action to perform if a rule matches (e.g. ACCEPT, DROP, LOG, etc.)           |
+
+---
+
+## 📋 Tables Overview
+
+| Table     | Purpose                                         | Chains                                 |
+|-----------|--------------------------------------------------|----------------------------------------|
+| `filter`  | Main firewalling — accept/drop traffic           | INPUT, OUTPUT, FORWARD                 |
+| `nat`     | NAT translation (src/dst IP changes)             | PREROUTING, POSTROUTING                |
+| `mangle`  | Modify packet headers                            | PREROUTING, OUTPUT, INPUT, FORWARD     |
+| `raw`     | Exempt from connection tracking                  | PREROUTING, OUTPUT                     |
+
+---
+
+## 🧱 Built-in Chains (Examples)
+
+| Chain        | Purpose                                                                 |
+|--------------|-------------------------------------------------------------------------|
+| INPUT        | Incoming packets destined for the system                                |
+| OUTPUT       | Outbound packets generated by the system                                |
+| FORWARD      | Packets routed through the system                                       |
+| PREROUTING   | Modify packets before routing decision                                  |
+| POSTROUTING  | Modify packets after routing decision                                   |
+
+---
+
+## 🎯 Targets
+
+| Target        | Description                                      |
+|---------------|--------------------------------------------------|
+| ACCEPT        | Allow the packet                                 |
+| DROP          | Silently drop the packet                         |
+| REJECT        | Drop + notify sender                             |
+| LOG           | Log packet to syslog                             |
+| SNAT          | Source NAT                                       |
+| DNAT          | Destination NAT                                  |
+| MASQUERADE    | Dynamic IP NAT                                   |
+| REDIRECT      | Redirect to another port                         |
+| MARK          | Tag packet (e.g. for routing decisions)          |
+
+---
+
+## 🎯 Matches
+
+| Match            | Description                                     |
+|------------------|-------------------------------------------------|
+| `-p`             | Protocol (e.g. tcp, udp, icmp)                   |
+| `--dport`        | Destination port                                 |
+| `--sport`        | Source port                                      |
+| `-s`             | Source IP                                        |
+| `-d`             | Destination IP                                   |
+| `-m state`       | Match connection state (NEW, ESTABLISHED, etc)  |
+| `-m multiport`   | Match multiple ports                             |
+| `-m string`      | Match payload string                             |
+| `-m mac`         | Match MAC address                                |
+| `-m mark`        | Match Netfilter mark                             |
+| `-m limit`       | Rate limiting                                    |
+| `-m conntrack`   | Connection tracking                              |
+| `-m iprange`     | Match IP range                                   |
+
+---
+
+## ⚙️ Example Rule
+
+Allow SSH:
+`sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT`
+
+Allow HTTP:
+`sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT`
+
+---
+
+## 🧪 Practical Checklist
+
+- Launch web server on port 8080  
+- Block incoming traffic on TCP/8080  
+- Allow incoming traffic on TCP/8080  
+- Block traffic from specific IP  
+- Allow traffic from specific IP  
+- Block traffic based on protocol  
+- Allow traffic based on protocol  
+- Create a new chain  
+- Forward traffic to custom chain  
+- Delete a specific rule  
+- List all existing rules:  
+  `sudo iptables -L -v -n`
+
+---
+
+# 📄 System Logs
+
+System logs on Linux are a set of files that contain information about the system and the activities taking place on it. These logs are important for:
+
+- Monitoring and troubleshooting the system
+- Gaining insight into system behavior and application activity
+- Detecting security events and breaches
+- Identifying unauthorized access, attempted attacks, or abnormal behavior
+
+As **penetration testers**, we can:
+
+- Analyze logs to identify weaknesses and attack vectors
+- Monitor if our actions triggered IDS alerts or log entries
+- Use findings to refine attack methods or improve system defenses
+
+## 🔒 Logging Best Practices
+
+- Set appropriate **log levels**
+- Configure **log rotation**
+- Secure storage & permissions
+- Regular **log reviews** for anomalies
+
+---
+
+## 🧩 Types of Logs
+
+| Type               | Description                                                                 |
+|--------------------|-----------------------------------------------------------------------------|
+| **Kernel Logs**     | Kernel, hardware drivers, system calls, stored in `/var/log/kern.log`       |
+| **System Logs**     | System-wide events, reboots, services, stored in `/var/log/syslog`          |
+| **Auth Logs**       | Login attempts, sudo usage, stored in `/var/log/auth.log`                   |
+| **Application Logs**| App-specific logs (e.g., Apache, MySQL), stored in `/var/log/<app>/...`     |
+| **Security Logs**   | Events from tools like UFW, Fail2Ban, auditd, etc.                          |
+
+---
+
+## 🧠 Kernel Logs
+
+- Store kernel-level messages: hardware, system calls, and critical errors
+- Location: `/var/log/kern.log`
+- Useful for identifying:
+  - Outdated/vulnerable drivers
+  - System crashes or DoS conditions
+  - Suspicious system calls or kernel-level malware
+
+---
+
+## 🖥️ System Logs
+
+- Store general system events: service startups, logins, CRON jobs, reboots
+- Location: `/var/log/syslog`
+- Sample:
+Feb 28 2023 15:04:22 server sshd[3010]: Failed password for htb-student from 10.14.15.2 port 50223 ssh2
+Feb 28 2023 15:07:19 server sshd[3010]: Accepted password for htb-student from 10.14.15.2 port 50223 ssh2
+
+
+---
+
+## 🔑 Authentication Logs
+
+- Focused on login attempts, sudo usage, and session starts
+- Location: `/var/log/auth.log`
+- Sample:
+Feb 28 2023 18:15:01 sshd[5678]: Accepted publickey for admin from 10.14.15.2 port 43210 ssh2
+Feb 28 2023 18:15:03 sudo: admin : COMMAND=/bin/bash
+
+
+---
+
+## 📦 Application Logs
+
+- Store logs for individual applications
+- Help identify misconfigurations, data exposure, or broken functionality
+- Common locations:
+
+| Service      | Log Path                                      |
+|--------------|-----------------------------------------------|
+| Apache       | `/var/log/apache2/access.log`                 |
+| Nginx        | `/var/log/nginx/access.log`                   |
+| OpenSSH      | `/var/log/auth.log` (Ubuntu) or `/var/log/secure` (RHEL) |
+| MySQL        | `/var/log/mysql/mysql.log`                    |
+| PostgreSQL   | `/var/log/postgresql/postgresql-*.log`        |
+| systemd-journald | `/var/log/journal/`                         |
+
+- Sample entry:
+2023-03-07T10:15:23+00:00 servername privileged.sh: htb-student accessed /root/hidden/api-keys.txt
+
+
+---
+
+## 🛡️ Security Logs
+
+- Include logs from firewalls, IDS, and other security tools
+- Common paths:
+- `/var/log/fail2ban.log` (Fail2Ban)
+- `/var/log/ufw.log` (UFW firewall)
+- `/var/log/audit/audit.log` (auditd)
+- `/var/log/syslog` or `/var/log/auth.log` (general security events)
+
+- Used for:
+- Log correlation & anomaly detection
+- Tracking brute-force attacks, suspicious processes
+- Tuning WAF/firewall rule sets during testing
+
+---
+
+## 🧰 Useful Commands
+
+| Command          | Purpose                               |
+|------------------|----------------------------------------|
+| `tail -f`         | Live log monitoring                    |
+| `grep`            | Search log contents                    |
+| `less` or `more`  | Scroll through logs                    |
+| `logrotate`       | Manage & rotate logs automatically     |
+
+---
+
+- Regular log analysis = one of the most powerful **passive recon** methods you have.  
+  
+Stay stealthy. Stay paranoid. Stay elite. 🖤

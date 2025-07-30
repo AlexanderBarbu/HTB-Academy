@@ -29,3 +29,17 @@ Service management
 Permissions management
 Windows security fundamentals
 
+LINUX FUNDAMENTALS - TOC missing
+
+Conclusion
+This module covered the essentials for working with the Linux operating system. As you progress through the Academy, you will continue to enhance and refine your skills on the command line and Linux operating system.
+
+Module Key Takeaways
+
+Linux structure
+Using the shell
+Navigating the Linux operating system
+Working with files and directories
+Linux administration
+Service management
+Permissions management
