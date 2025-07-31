@@ -29,7 +29,7 @@ Service management
 Permissions management
 Windows security fundamentals
 
-LINUX FUNDAMENTALS - TOC missing
+LINUX FUNDAMENTALS -
 
 Conclusion
 This module covered the essentials for working with the Linux operating system. As you progress through the Academy, you will continue to enhance and refine your skills on the command line and Linux operating system.
@@ -43,3 +43,19 @@ Working with files and directories
 Linux administration
 Service management
 Permissions management
+
+MacOS FUNDAMENTALS - 
+
+Conclusion
+This module covered the essentials for working with the macOS operating system.
+
+** Module Key Takeaways **
+
+macOS system structure
+File system specifics
+Permissions management
+macOS services and applications
+Interacting with the operating system (CLI & GUI)
+Security Considerations
+Application management
+Key administrative features
