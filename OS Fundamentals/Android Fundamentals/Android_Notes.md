@@ -402,3 +402,114 @@ The Android architecture consists of six core components:
 - Includes binary versions of XML resources (styles, strings, layouts)
 
 ---
+
+# Native Apps
+- Software applications built specifically for a platform using platform-native tools.
+- On Android:
+  - Primary languages: **Kotlin** (default) and **Java**
+  - IDE: **Android Studio**
+  - Uses Android SDK components
+
+---
+
+## Layouts (XML)
+- Define the **UI structure** of the app.
+- Created under: `res/layout/`
+- Can include:
+  - TextViews
+  - Buttons
+  - Images
+  - Other widgets
+
+**Example file:** `activity_main.xml`
+- Contains UI elements with attributes like:
+  - **tools:context** — Activity that uses the layout (design-time only)
+  - **android:id** — Unique ID for linking UI to code (`@+id/...`)
+  - **android:text** — Static text or string resource reference
+
+---
+
+## String Resources
+- Located in: `res/values/strings.xml`
+- Stores text for UI, allowing localization.
+- Accessed via the **R class** in code (`R.string.message`).
+
+---
+
+### Java Code Example (MainActivity.java)
+- Located under: `java/<package_name>/`
+- **onCreate()** method:
+  - Sets layout with `setContentView()`
+  - Initializes UI components via `findViewById()`
+  - Defines event listeners (`setOnClickListener`)
+
+---
+
+### Kotlin Code Example (MainActivity.kt)
+- Similar structure to Java but more concise.
+- Uses Kotlin syntax for initialization and listeners.
+
+---
+
+## Signed APK Generation
+- Process:
+  1. Build → Generate Signed Bundle / APK
+  2. Select **APK**
+  3. Create or choose an existing **Key Store**
+  4. Set alias, password, and certificate details
+  5. Choose **release** build type and finish
+- Output file location:
+  - `~/AndroidStudioProjects/<AppName>/app/release/app-release.apk`
+
+---
+
+## Key Notes
+- Kotlin is now the **default language** for Android development.
+- Java remains widely used and fully supported.
+- Both compile to DEX bytecode executed by **ART** or **Dalvik VM**.
+- Reverse engineering tools can produce similar pseudocode for both.
+
+---
+
+# Native Code
+- Compiled to run on a specific processor architecture for better performance on compatible hardware.
+- Enabled via **Android NDK (Native Development Kit)**, allowing parts of the app to be written in **C** or **C++**.
+- Used to:
+  - Reduce latency
+  - Optimize hardware usage
+  - Increase security
+
+---
+
+## Integration with Java/Kotlin
+- **JNI (Java Native Interface)** allows Java/Kotlin to interact with C/C++ code.
+- Cross-language method calls and data exchange are possible through JNI.
+
+---
+
+### Example Project
+**Steps:**
+1. **Create Project** → *New Project → Native C++* in Android Studio.
+2. Select **Toolchain Default** under C++ Standard.
+3. Finish setup → native code appears in `native-lib.cpp`.
+
+---
+
+### Example: `native-lib.cpp`
+- Implements function returning `"Hello from C++"`.
+- Follows JNI naming convention:
+  - `Java_<package_name>_<class_name>_<method_name>`
+- Uses:
+  - `env->NewStringUTF()` to return strings to Java layer.
+
+---
+
+### Example: `MainActivity.java` Integration
+- Static loading of library:
+  ```java
+  static {
+      System.loadLibrary("myapplication");
+  }
+
+---
+
