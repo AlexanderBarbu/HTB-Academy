@@ -11,14 +11,10 @@
             "id": "9c997259b9daf1c8",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "HTB Academy.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "HTB Academy"
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
             }
           }
         ]
@@ -94,7 +90,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "HTB Academy.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +99,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for HTB Academy"
+              "title": "Backlinks"
             }
           },
           {
@@ -113,12 +108,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "HTB Academy.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from HTB Academy"
+              "title": "Outgoing links"
             }
           },
           {
@@ -142,13 +136,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "HTB Academy.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of HTB Academy"
+              "title": "Outline"
             }
           }
         ]
@@ -170,6 +163,9 @@
   },
   "active": "9c997259b9daf1c8",
   "lastOpenFiles": [
+    "Cracking into HTB/Web requests/Web Requests Notes.md",
+    "Cracking into HTB/Cracking into HTB.md",
+    "Cracking into HTB/Web requests/Web_Requests_Module_Cheat_Sheet.pdf",
     "HTB Academy.md",
     "OS Fundamentals/Linux Fundamentals/Linux_Fundamentals_Module_Cheat_Sheet.pdf",
     "OS Fundamentals/Linux Fundamentals/Linux_Notes.md",
