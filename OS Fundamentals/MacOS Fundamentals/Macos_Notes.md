@@ -117,6 +117,8 @@
 
 
 
+
+for cheat sheet on Commands check: [[Macos_Fundamentals_Module_Cheat_Sheet.pdf]]
 # Introduction - What Is macOS?
 
 macOS is the official operating system for Apple computers, known for its sleek UI and strong integration across Apple devices. It is second in market share to Windows and is widely used in homes, businesses, and the creative industry.

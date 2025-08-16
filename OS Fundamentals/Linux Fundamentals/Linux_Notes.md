@@ -255,6 +255,9 @@
   - [🧰 Useful Commands](#-useful-commands)
 ---
 
+
+for cheat sheet on Commands check:  [[Linux_Fundamentals_Module_Cheat_Sheet.pdf]]
+
 # 🐧 Linux Structure & Philosophy
 
 ## 📌 What is Linux?

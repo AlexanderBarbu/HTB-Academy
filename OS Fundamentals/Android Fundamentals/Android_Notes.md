@@ -1,5 +1,6 @@
 ## Android Fundamentals — Introduction
 
+for cheat sheet on Commands check: [[Android_Fundamentals_Module_Cheat_Sheet.pdf]]
 ### About Android
 - Android is a mobile operating system for touchscreen devices like smartphones and tablets.
 - Based on a modified **Linux Kernel**.

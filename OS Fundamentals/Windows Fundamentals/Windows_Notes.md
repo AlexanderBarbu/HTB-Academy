@@ -1,5 +1,7 @@
 ## Table of Contents
 
+for cheat sheet on Commands check: [[Windows_Fundamentals_Module_Cheat_Sheet.pdf]] && [[ws-commands.pdf]]
+
 
 ## Accessing Windows
 
