@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Information Security Foundations/The Learning Process.md",
+                "file": "Information Security Foundations/Setting Up.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "The Learning Process"
+              "title": "Setting Up"
             }
           }
         ]
@@ -160,6 +160,7 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "bases:Create new base": false,
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
@@ -168,12 +169,13 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "991246a7f43cebee",
+  "active": "bc6acffc7e5069c9",
   "lastOpenFiles": [
-    "Assets",
-    "Assets/Edgar_Dale's_cone_of_learning.png",
     "Information Security Foundations/Information Security Foundations.md",
     "Information Security Foundations/The Learning Process.md",
+    "Information Security Foundations/Setting Up.md",
+    "Assets",
+    "Assets/Edgar_Dale's_cone_of_learning.png",
     "HTB Academy.md",
     "OS Fundamentals/OS Fundamentals.md",
     "OS Fundamentals.md",
