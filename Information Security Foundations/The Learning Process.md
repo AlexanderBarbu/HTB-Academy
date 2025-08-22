@@ -212,9 +212,10 @@
   - Present (understand process)  
   - Future (predict effect)  
 
-## Key Takeaway
-- Right **goal → right question → better answers**.  
-- Quality of questioning defines learning & problem-solving effectiveness.  
+>[!NOTE]
+>Right **goal → right question → better answers**.  
+> Quality of questioning defines learning & problem-solving effectiveness.  
+
 ---
 # Relationship-Oriented-Questioning Model (ROQ)
 
@@ -285,11 +286,12 @@ Question: *“What methods exist to remotely access Windows OS?”*
   - Forced to run 2 miles for train = high frustration.  
   - Choosing to leave late & run = lower frustration → self-analysis instead of blame.  
 
-## Key Takeaways
-- Frustration = **temporary**, passes with time.  
-- Don’t fear it → embrace controlled frustration for growth.  
-- Over time → calmer reactions, stronger self-confidence.  
-- Can control **inner frustration**, rarely external.  
+>[!NOTE]
+> Frustration = **temporary**, passes with time.  
+> Don’t fear it → embrace controlled frustration for growth.  
+> Over time → calmer reactions, stronger self-confidence.  
+> Can control **inner frustration**, rarely external.  
+
 ---
 # Learning Progress
 
@@ -313,7 +315,10 @@ Question: *“What methods exist to remotely access Windows OS?”*
   - Even 10 minutes/day counts.  
   - Optionally log by calendar week.  
 
-## Key Takeaway
-- Small, consistent steps → exponential results.  
-- Progress is personal → only visible when tracked over time.  
+>[!NOTE]
+> Small, consistent steps → exponential results.  
+> Progress is personal → only visible when tracked over time.  
+
 ---
+
+
