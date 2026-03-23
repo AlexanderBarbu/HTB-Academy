@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "583335533ade6253",
+        "id": "81dfe9afd7f98570",
         "type": "tabs",
         "children": [
           {
-            "id": "bc6acffc7e5069c9",
+            "id": "741e8beab498acf9",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Information Security Foundations/Setting Up.md",
+                "file": "Information Security Foundations/Windows Command Line.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Setting Up"
+              "title": "Windows Command Line"
             }
           }
         ]
@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 373.5
   },
   "right": {
     "id": "774dc880557d6665",
@@ -169,12 +169,13 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "bc6acffc7e5069c9",
+  "active": "741e8beab498acf9",
   "lastOpenFiles": [
-    "Information Security Foundations/The Learning Process.md",
-    "Information Security Foundations/Setting Up.md",
-    "Information Security Foundations/Information Security Foundations.md",
     "OS Fundamentals/Linux Fundamentals/Linux_Notes.md",
+    "Information Security Foundations/Windows Command Line.md",
+    "Information Security Foundations/The Learning Process.md",
+    "Information Security Foundations/Information Security Foundations.md",
+    "Information Security Foundations/Setting Up.md",
     "OS Fundamentals/OS Fundamentals.md",
     "Assets",
     "Assets/Edgar_Dale's_cone_of_learning.png",
