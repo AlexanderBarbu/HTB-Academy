@@ -409,3 +409,758 @@ Although internet can help with finding the right syntax and function of a comma
 - Vulnerable applications  
   
 ---
+
+##  Working with Directories & Files (CMD)
+
+- Focus: Creating and managing directories
+- Builds on:
+  - `cd` (navigation)
+  - `dir` (listing)
+  - `tree` (structure visualization)
+
+---
+
+## Directories Recap
+
+### Definition
+- A directory = container for files and other directories
+- Forms the hierarchical structure of the filesystem
+
+---
+
+## File System Mental Model (Refined)
+
+| Concept   | Meaning                     |
+|----------|----------------------------|
+| `C:\`     | Root (base of everything)  |
+| `Users`   | Top-level directory        |
+| `htb`     | User-specific folder       |
+| Files     | Final objects (data)       |
+
+---
+
+## Viewing & Listing Directories
+
+### Current Location
+- `cd`
+  - Shows current working directory
+
+---
+
+### List Contents
+- `dir`
+  - Displays:
+    - Files
+    - Subdirectories
+
+---
+
+### Full Structure
+- `tree`
+  - Displays full directory hierarchy
+
+#### With Files
+- `tree /F`
+  - Includes files in output
+
+---
+
+## Combining Commands (Workflow)
+
+### Typical Flow
+- Check location → `cd`
+- List contents → `dir`
+- Map structure → `tree /F`
+
+### Why Combine Them
+- Faster exploration
+- Better situational awareness
+- Reduced manual navigation
+
+---
+
+## Creating Directories
+
+### Commands
+
+| Command | Description |
+|--------|-------------|
+| `md`   | Make directory |
+| `mkdir`| Make directory (same as md) |
+
+---
+
+### Behavior
+- Creates a new folder in current directory
+- Can also create directories using full path
+
+---
+
+## Key Concepts
+
+### Relative Creation
+- Directory created relative to current location
+
+### Absolute Creation
+- Directory created using full path from root
+
+---
+
+## Why This Matters
+
+### System Usage
+- Organize files
+- Structure data logically
+
+### Cybersecurity Perspective
+- Create staging areas for:
+  - Tools
+  - Payloads
+  - Data collection
+
+---
+
+## Attacker Mindset
+
+### Use Cases
+- Drop tools in writable directories
+- Create hidden working folders
+- Maintain persistence (depending on context)
+
+---
+
+## TL;DR
+
+- Directories = structure backbone  
+- `cd` → where you are  
+- `dir` → what exists  
+- `tree` → full map  
+- `md` / `mkdir` → create folders  
+- Combine commands = faster workflow  
+
+---
+
+
+  
+## Host Enumeration – Types of Information  
+
+- Goal: Build a **clear picture of the target system**  
+- Avoid random searching → follow structured methodology  
+- Focus on **what matters**, not everything  
+  
+---  
+  
+## Why Enumeration Matters  
+  
+- Saves time (no blind searching)  
+- Helps identify:  
+- Attack surface  
+- Misconfigurations  
+- Privilege escalation paths  
+- Builds **situational awareness**  
+  
+---  
+  
+## Core Information Categories  
+  
+### 1. General System Information  
+  
+#### What It Includes  
+- Hostname  
+- OS Name  
+- OS Version  
+- OS Configuration  
+- Installed patches / hotfixes  
+  
+#### Why It Matters  
+- Identify:  
+- Vulnerabilities  
+- Missing patches  
+- System type (server, workstation)  
+  
+---  
+  
+### 2. Networking Information  
+  
+#### What It Includes  
+- Host IP address  
+- Network interfaces  
+- Accessible subnets  
+- DNS servers  
+- Known hosts  
+- Network resources:  
+- Shares  
+- Domain resources  
+- Devices (printers, etc.)  
+- Firewall configuration  
+  
+#### Why It Matters  
+- Map the network  
+- Discover:  
+- Lateral movement paths  
+- Other targets  
+- Internal services  
+  
+---  
+  
+### 3. Basic Domain Information  
+  
+#### What It Includes  
+- Domain / Workgroup name  
+- Logon server  
+  
+#### Why It Matters  
+- Detect:  
+- Active Directory presence  
+- Enables:  
+- Domain enumeration  
+- Privilege escalation in domain environments  
+  
+---  
+  
+### 4. User Information  
+  
+#### What It Includes  
+- User accounts  
+- Local groups  
+- Environment variables  
+- Running processes (tasks)  
+- Scheduled tasks  
+- Services  
+- Security tools:  
+- Antivirus  
+- IDS/IPS  
+  
+#### Why It Matters  
+- Identify:  
+- Current privileges  
+- Potential escalation paths  
+- Persistence mechanisms  
+  
+---  
+  
+## Key Enumeration Questions  
+  
+### Always Ask Yourself  
+  
+- What system information can I extract?  
+- What other systems is this host connected to?  
+- What access do I currently have?  
+- What can I do with this access?  
+  
+---  
+  
+## Methodology Mindset  
+  
+### Don’t Do This  
+- Random commands  
+- Blind searching  
+- “try everything and hope”  
+  
+### Do This Instead  
+- Follow structured categories  
+- Prioritize valuable data  
+- Filter noise  
+  
+---  
+  
+## Practical Goal  
+  
+- Turn raw data → **actionable intel**  
+- Build:  
+- Attack path  
+- Exploitation plan  
+- Privilege escalation strategy  
+  
+---
+
+## Why Do We Need This Information?  
+  
+### Core Idea  
+- Enumeration = **your roadmap**  
+- Without it → you're blind, guessing, wasting time  
+  
+---  
+  
+## Real Scenario (Assumed Breach)  
+  
+### Situation  
+- You have:  
+- Initial access  
+- Low-privileged user  
+  
+### Goal  
+- Escalate privileges → admin / SYSTEM  
+  
+---  
+  
+## What You Need to Figure Out  
+  
+### User Context  
+  
+- Which user am I?  
+- What groups do I belong to?  
+- What privileges do I have?  
+  
+---  
+  
+### System Access  
+  
+- What can I access locally?  
+- What files/directories are available?  
+- What misconfigurations exist?  
+  
+---  
+  
+### Network Access  
+  
+- What systems can I reach?  
+- Any shared resources?  
+- Domain presence?  
+  
+---  
+  
+### Execution Context  
+  
+- What processes are running?  
+- What services exist?  
+- Any scheduled tasks?  
+  
+---  
+  
+## Key Insight (THIS is important af)  
+  
+### ❌ Wrong Mindset  
+- "System is patched → nothing to exploit"  
+  
+### ✅ Correct Mindset  
+- Humans misconfigure systems ALL the time  
+  
+👉 Most real-world wins:  
+- Weak permissions  
+- Bad configs  
+- Exposed credentials  
+- Poor security practices  
+  
+---  
+  
+## Why Thorough Enumeration Wins  
+  
+- Finds:  
+- Hidden attack paths  
+- Privilege escalation vectors  
+- Lateral movement opportunities  
+  
+- Prevents:  
+- Missing easy wins  
+- Tunnel vision on CVEs only  
+  
+---  
+  
+## How Do We Get This Information?  
+  
+## ⚡ `systeminfo` – The Quick Recon Tool  
+  
+### Purpose  
+- One command → massive info dump  
+  
+---  
+  
+### What It Gives You  
+  
+- Hostname  
+- OS Name / Version / Build  
+- Installed patches (hotfixes)  
+- Network info (IPs)  
+- Domain membership  
+- Hardware details  
+  
+---  
+  
+### Why It's OP  
+  
+- Minimal footprint (stealthier)  
+- Fast overview of system  
+- Great starting point  
+  
+---  
+  
+## Attacker Use Case  
+  
+### Workflow  
+  
+1. Run `systeminfo`  
+2. Extract:  
+- OS version  
+- Patch level  
+3. Search:  
+- Google / ExploitDB  
+4. Check:  
+- Known exploits  
+- PrivEsc vectors  
+  
+---  
+  
+## Defender Use Case  
+  
+- Troubleshooting  
+- System diagnostics  
+- Patch verification  
+  
+---  
+  
+## Key Advantage  
+  
+- 1 command instead of many  
+- Less noise = less detection risk  
+  
+---  
+  
+## TL;DR  
+  
+- Enumeration = your attack blueprint  
+- Focus on:  
+- user  
+- system  
+- network  
+- Don’t trust "fully patched" systems  
+- `systeminfo` = fast, stealthy recon  
+- Smart enumeration > blind exploitation 💀
+
+---
+## Why Do We Need This Information?  
+  
+### Core Idea  
+- Enumeration = **your roadmap**  
+- Without it → you're blind, guessing, wasting time  
+  
+---  
+  
+## Real Scenario (Assumed Breach)  
+  
+### Situation  
+- You have:  
+- Initial access  
+- Low-privileged user  
+  
+### Goal  
+- Escalate privileges → admin / SYSTEM  
+  
+---  
+  
+## What You Need to Figure Out  
+  
+### User Context  
+  
+- Which user am I?  
+- What groups do I belong to?  
+- What privileges do I have?  
+  
+---  
+  
+### System Access  
+  
+- What can I access locally?  
+- What files/directories are available?  
+- What misconfigurations exist?  
+  
+---  
+  
+### Network Access  
+  
+- What systems can I reach?  
+- Any shared resources?  
+- Domain presence?  
+  
+---  
+  
+### Execution Context  
+  
+- What processes are running?  
+- What services exist?  
+- Any scheduled tasks?  
+  
+---  
+  
+## Key Insight (THIS is important af)  
+  
+### ❌ Wrong Mindset  
+- "System is patched → nothing to exploit"  
+  
+### ✅ Correct Mindset  
+- Humans misconfigure systems ALL the time  
+  
+👉 Most real-world wins:  
+- Weak permissions  
+- Bad configs  
+- Exposed credentials  
+- Poor security practices  
+  
+---  
+  
+## Why Thorough Enumeration Wins  
+  
+- Finds:  
+- Hidden attack paths  
+- Privilege escalation vectors  
+- Lateral movement opportunities  
+  
+- Prevents:  
+- Missing easy wins  
+- Tunnel vision on CVEs only  
+  
+---  
+  
+## How Do We Get This Information?  
+  
+## ⚡ `systeminfo` – The Quick Recon Tool  
+  
+### Purpose  
+- One command → massive info dump  
+  
+---  
+  
+### What It Gives You  
+  
+- Hostname  
+- OS Name / Version / Build  
+- Installed patches (hotfixes)  
+- Network info (IPs)  
+- Domain membership  
+- Hardware details  
+  
+---  
+  
+### Why It's OP  
+  
+- Minimal footprint (stealthier)  
+- Fast overview of system  
+- Great starting point  
+  
+---  
+  
+## Attacker Use Case  
+  
+### Workflow  
+  
+1. Run `systeminfo`  
+2. Extract:  
+- OS version  
+- Patch level  
+3. Search:  
+- Google / ExploitDB  
+4. Check:  
+- Known exploits  
+- PrivEsc vectors  
+  
+---  
+  
+## Defender Use Case  
+  
+- Troubleshooting  
+- System diagnostics  
+- Patch verification  
+  
+---  
+  
+## Key Advantage  
+  
+- 1 command instead of many  
+- Less noise = less detection risk  
+  
+---
+
+## Finding Files & Directories (CMD) – Enumeration & Search
+- Goal: Efficiently **locate files, directories, and data**  
+- Critical for:  
+- Enumeration  
+- Data discovery  
+- Privilege escalation  
+  
+---  
+  
+## Why File Enumeration Matters  
+  
+- Finds:  
+- Credentials (👀 passwords.txt classic)  
+- Config files  
+- Logs  
+- Sensitive data  
+- Saves time vs manual browsing  
+- Helps build attack paths fast  
+  
+---  
+  
+## Searching Files & Apps  
+  
+## `where` Command  
+  
+### Purpose  
+- Locate files/executables on system  
+  
+---  
+  
+### Basic Usage  
+  
+- Searches:  
+- Environment PATH directories by default  
+  
+---  
+  
+### Behavior  
+  
+- Works automatically for:  
+- System binaries (e.g. `calc.exe`)  
+- Fails if file is outside PATH  
+  
+---  
+  
+## Recursive Search (`/R`)  
+  
+### Purpose  
+- Search entire directory tree  
+  
+### Usage Concept  
+- Specify base path → search everything inside  
+  
+---  
+  
+## Wildcards  
+  
+### Supported Patterns  
+  
+| Pattern | Meaning |  
+|--------|--------|  
+| `*` | Any characters |  
+| `*.csv`| All CSV files |  
+  
+---  
+  
+### Use Case  
+- Find all files of specific type  
+  
+---  
+  
+## Searching Inside Files  
+  
+## `find` Command  
+  
+### Purpose  
+- Search for **text strings** inside files  
+  
+---  
+  
+### Key Features  
+  
+- Simple string matching  
+- Works on:  
+- Files  
+- Command output  
+  
+---  
+  
+### Important Switches  
+  
+| Switch | Description |  
+|--------|-------------|  
+| `/V` | NOT match (exclude string) |  
+| `/N` | Show line numbers |  
+| `/I` | Ignore case |  
+  
+---  
+  
+### Limitations  
+- No wildcard/regex support  
+- Basic functionality only  
+  
+---  
+  
+## Advanced Search  
+  
+## `findstr` Command  
+  
+### Purpose  
+- Advanced version of `find`  
+  
+---  
+  
+### Capabilities  
+  
+- Pattern matching  
+- Regex support  
+- Wildcards  
+- Multiple conditions  
+  
+---  
+  
+### Comparison  
+  
+| Tool | Capability Level |  
+|----------|-----------------|  
+| `find` | Basic |  
+| `findstr`| Advanced (like `grep`) |  
+  
+---  
+  
+## Evaluating & Comparing Files  
+  
+## `comp`  
+  
+### Purpose  
+- Compare files byte-by-byte  
+  
+---  
+  
+### Features  
+  
+- Shows:  
+- Differences between files  
+- Default:  
+- Decimal output  
+  
+---  
+  
+### Useful Switches  
+  
+| Switch | Description |  
+|--------|-------------|  
+| `/A` | ASCII format |  
+| `/L` | Show line numbers |  
+  
+---  
+  
+## Other Tools  
+  
+| Command | Purpose |  
+|--------|--------|  
+| `fc` | Compare files (more readable) |  
+| `sort` | Sort file content |  
+  
+---  
+  
+## Attacker Mindset  
+  
+### What to Search For  
+  
+- Filenames:  
+- `password`  
+- `config`  
+- `backup`  
+- `admin`  
+- File types:  
+- `.txt`  
+- `.xml`  
+- `.ini`  
+- `.log`  
+- `.csv`  
+  
+---  
+  
+### Strategy  
+  
+1. Locate files → `where /R`  
+2. Filter types → wildcards  
+3. Search inside → `findstr`  
+4. Analyze differences → `comp` / `fc`  
+  
+---  
