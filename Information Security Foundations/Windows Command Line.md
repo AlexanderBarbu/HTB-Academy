@@ -1164,3 +1164,323 @@ Although internet can help with finding the right syntax and function of a comma
 4. Analyze differences → `comp` / `fc`  
   
 ---  
+
+# Managing Services (CMD)  
+  
+## Overview  
+- Services = background processes managed by Windows  
+- Critical for:  
+- System operation  
+- Security  
+- Persistence  
+  
+---  
+  
+## Why Services Matter  
+  
+### Administrator Perspective  
+- Monitor system health  
+- Start/stop applications  
+- Troubleshoot issues  
+  
+---  
+  
+### Attacker Perspective  
+- Discover security software  
+- Disable defenses  
+- Abuse weak service configurations  
+- Gain persistence  
+  
+---  
+  
+## Typical Attacker Goals  
+  
+### 1. Enumerate Running Services  
+- Identify:  
+- Antivirus  
+- Monitoring tools  
+- Vulnerable services  
+  
+---  
+  
+### 2. Disable Security Tools  
+- AV  
+- EDR  
+- Logging services  
+  
+⚠️ Extremely noisy in real environments  
+(Defenders absolutely love when someone kills Defender at 3AM. Free SIEM dopamine.)  
+  
+---  
+  
+### 3. Modify Existing Services  
+- Change:  
+- Executable path  
+- Startup behavior  
+- Permissions  
+  
+---  
+  
+# Service Controller (`sc`)  
+  
+## What is `sc`?  
+  
+### Definition  
+- Windows Service Controller utility  
+- Built-in executable for:  
+- Querying  
+- Managing  
+- Modifying services  
+  
+---  
+  
+## Capabilities  
+  
+| Action | Description |  
+|--------|-------------|  
+| Query | View services |  
+| Start | Start services |  
+| Stop | Stop services |  
+| Create | Create new services |  
+| Config | Modify service settings |  
+| Delete | Remove services |  
+  
+---  
+  
+## Local & Remote Management  
+  
+### Supports  
+- Local host management  
+- Remote host management  
+  
+---  
+  
+## Why `sc` Is Powerful  
+  
+- Native Windows binary  
+- No extra tools required  
+- Useful for:  
+- Admins  
+- Attackers  
+- Red Team ops  
+  
+---  
+  
+## Alternative Tools  
+  
+| Tool | Purpose |  
+|------|---------|  
+| `WMIC` | Query/manage system components |  
+| `tasklist` | View running tasks/processes |  
+  
+---  
+  
+## Attacker Enumeration Focus  
+  
+### What to Look For  
+  
+- Weak permissions  
+- Unquoted service paths  
+- Services running as:  
+- SYSTEM  
+- Administrator  
+  
+---  
+  
+### Interesting Service Properties  
+  
+- Binary path  
+- Startup type  
+- Service account  
+- Current state  
+  
+---  
+  
+## Service Abuse Possibilities  
+  
+### Common Misconfigurations  
+  
+- Writable service binaries  
+- Writable service folders  
+- Weak ACLs  
+- Unquoted paths  
+  
+---  
+  
+## Why This Matters  
+  
+### Potential Outcomes  
+- Privilege escalation  
+- Persistence  
+- Defense evasion  
+  
+---
+
+## Default Behavior  
+  
+### Running Without Arguments  
+- Displays:  
+- Help menu  
+- Syntax  
+- Examples  
+  
+---  
+  
+## Syntax Structure  
+  
+| Component | Purpose |  
+|----------|---------|  
+| `sc` | Service Controller command |  
+| `<server>` | Remote target system |  
+| `[command]` | Action to perform |  
+| `[service name]` | Target service |  
+  
+---  
+  
+## Remote Management  
+  
+### Server Syntax  
+- Uses:  
+- `\\ServerName`  
+  
+### Why It Matters  
+- Manage services remotely  
+- Useful in:  
+- Administration  
+- Lateral movement scenarios  
+  
+---  
+  
+# Querying Services  
+  
+## Why Query Services?  
+  
+### Attacker Perspective  
+- Identify:  
+- Antivirus  
+- EDR  
+- Monitoring tools  
+- Vulnerable services  
+  
+### Defender Perspective  
+- Troubleshooting  
+- Monitoring  
+- Diagnostics  
+  
+---  
+  
+## Enumerating Running Services  
+  
+### Command Concept  
+- Query all active Win32 services  
+  
+---  
+  
+## ⚠️ Important Syntax Detail  
+  
+### Spacing Matters  
+  
+| Syntax | Valid? |  
+|--------|--------|  
+| `type= service` | ✅ Correct |  
+| `type=service` | ❌ Wrong |  
+| `type =service` | ❌ Wrong |  
+  
+Windows CMD parser casually sabotaging humans since the 90s. Ancient ritual spacing technology.  
+  
+---  
+  
+# Understanding Service Output  
+  
+## Key Fields  
+  
+| Field | Meaning |  
+|------|---------|  
+| `SERVICE_NAME` | Internal service name |  
+| `DISPLAY_NAME` | Human-readable name |  
+| `TYPE` | Service execution type |  
+| `STATE` | Current status |  
+| `WIN32_EXIT_CODE` | Service exit status |  
+| `CHECKPOINT` | Startup/shutdown progress |  
+| `WAIT_HINT` | Estimated wait time |  
+  
+---  
+  
+## Service States  
+  
+| State Value | Meaning |  
+|-------------|---------|  
+| `1` | STOPPED |  
+| `4` | RUNNING |  
+  
+---  
+  
+## Service Types  
+  
+| Type | Meaning |  
+|------|---------|  
+| `WIN32` | Standard Windows service |  
+| `WIN32_OWN_PROCESS` | Dedicated process |  
+| `WIN32_SHARE_PROCESS` | Shared process |  
+  
+---  
+  
+# Useful Queries  
+  
+## Active Services  
+- Enumerate currently running services  
+  
+---  
+  
+## All Services  
+- Include stopped services and drivers  
+  
+---  
+  
+## Drivers Only  
+- Enumerate active drivers  
+  
+---  
+  
+## Interactive Services  
+- Find services interacting with desktop/user  
+  
+---  
+  
+# Why This Enumeration Matters  
+  
+## Valuable Findings  
+  
+### Security Software  
+- Defender  
+- AV  
+- EDR  
+  
+### Potential PrivEsc Targets  
+- Weak service permissions  
+- Misconfigured binaries  
+- Unquoted paths  
+  
+### Operational Intel  
+- Running applications  
+- Installed software ecosystem  
+  
+---  
+  
+# Attacker Methodology  
+  
+## Typical Workflow  
+  
+1. Enumerate services  
+2. Identify:  
+- security products  
+- custom apps  
+- weak configs  
+3. Investigate:  
+- permissions  
+- executable paths  
+4. Attempt:  
+- privilege escalation  
+- persistence  
+  
+---
